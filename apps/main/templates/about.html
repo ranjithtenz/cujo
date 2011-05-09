@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load project_tags %}
+{% load version_tags %}
+{% block title %} :: {% trans "About this program" %}{% endblock %}
+{% block content %}
+
+<div class="content">
+    <h3 class="tc">
+    {% project_name %} ({% trans "Version" %} {% app_version "main" %})<br /><br />
+    {% trans "Reminder application" %}<br /><br />
+    <a href="http://www.github.com/rosarior/mayan/">http://www.github.com/rosarior/cujo/</a><br /><br />
+    <br/>{% trans "Released under the GPL V3 License" %}
+    </h3>
+    {#<div class="tc"><img src="{{ MEDIA_URL }}images.png"/></div>#}
+</div>
+{% endblock %}
+{% block footer %}
+    <div id="footer">
+        <div class="block">
+            <p>Copyright &copy; 2011 Roberto Rosario.</p>
+        </div>
+    </div>
+{% endblock %}

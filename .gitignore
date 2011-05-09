@@ -1,0 +1,8 @@
+*.orig
+*.pyc
+*.pyo
+*.sqlite
+settings_local.py
+site_media/documents/*
+celerybeat-schedule
+misc/*.geany

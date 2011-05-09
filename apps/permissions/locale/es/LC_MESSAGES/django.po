@@ -1,0 +1,203 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# 
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-05-06 13:33-0400\n"
+"PO-Revision-Date: 2011-05-06 13:39\n"
+"Last-Translator: Roberto Rosario <rosario_r@jp.pr.gov>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: \n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Translated-Using: django-rosetta 0.6.0\n"
+
+#: __init__.py:19 models.py:53 views.py:29
+msgid "roles"
+msgstr "funciones"
+
+#: __init__.py:20
+msgid "create new role"
+msgstr "crear nueva función"
+
+#: __init__.py:21
+msgid "edit"
+msgstr "editar"
+
+#: __init__.py:22
+msgid "members"
+msgstr "miembros"
+
+#: __init__.py:23
+msgid "role permissions"
+msgstr "permisos de la funcion"
+
+#: __init__.py:24
+msgid "delete"
+msgstr "eliminar"
+
+#: api.py:42
+msgid "Insufficient permissions."
+msgstr "Permisos insuficientes."
+
+#: api.py:76
+msgid "View roles"
+msgstr "Ver las funciones"
+
+#: api.py:77
+msgid "Edit roles"
+msgstr "Modificar las funciones"
+
+#: api.py:78
+msgid "Create roles"
+msgstr "Crear funciones"
+
+#: api.py:79
+msgid "Delete roles"
+msgstr "Eliminar funciones"
+
+#: api.py:80
+msgid "Grant permissions"
+msgstr "Conceder permisos"
+
+#: api.py:81
+msgid "Revoke permissions"
+msgstr "Revocar permisos"
+
+#: forms.py:22
+msgid "Selection"
+msgstr "Selección"
+
+#: models.py:14 views.py:66
+msgid "namespace"
+msgstr "espacio de nombres"
+
+#: models.py:15 views.py:67
+msgid "name"
+msgstr "nombre"
+
+#: models.py:16 models.py:48
+msgid "label"
+msgstr "etiqueta"
+
+#: models.py:23 models.py:31
+msgid "permission"
+msgstr "permiso"
+
+#: models.py:24 views.py:63
+msgid "permissions"
+msgstr "permisos"
+
+#: models.py:39
+msgid "permission holder"
+msgstr "titular de la autorización"
+
+#: models.py:40
+msgid "permission holders"
+msgstr "titulares de autorización"
+
+#: models.py:52 models.py:70 views.py:82 views.py:92 views.py:116 views.py:239
+msgid "role"
+msgstr "función"
+
+#: models.py:79
+msgid "role member"
+msgstr "miembro de la función"
+
+#: models.py:80
+msgid "role members"
+msgstr "miembros de las functiones"
+
+#: views.py:44
+msgid "Revoke"
+msgstr "Revocar"
+
+#: views.py:49
+msgid "Grant"
+msgstr "Otorgar"
+
+#: views.py:69
+msgid "state"
+msgstr "estado"
+
+#: views.py:128
+#, python-format
+msgid ""
+"Are you sure you wish to grant the permission \"%(permission)s\" to "
+"%(ct_name)s: %(requester)s"
+msgstr ""
+"¿Está seguro que desea conceder el permiso \"%(permission)s\" a "
+"%(ct_name)s: %(requester)s?"
+
+#: views.py:133
+#, python-format
+msgid ""
+"Are you sure you wish to revoke the permission \"%(permission)s\" from "
+"%(ct_name)s: %(requester)s"
+msgstr ""
+"¿Está seguro que desea revocar el permiso \"%(permission)s\" de "
+"%(ct_name)s: %(requester)s?"
+
+#: views.py:145
+#, python-format
+msgid "Permission \"%(permission)s\" granted to %(ct_name)s: %(requester)s."
+msgstr "Permiso \"%(permission)s\" otorgado a %(ct_name)s: %(requester)s"
+
+#: views.py:148
+#, python-format
+msgid ""
+"%(ct_name)s: %(requester)s, already had the permission \"%(permission)s\""
+" granted."
+msgstr ""
+" %(ct_name)s: %(requester)s, ya tenía el permiso \"%(permission)s\" "
+"otorgado."
+
+#: views.py:154
+#, python-format
+msgid "Permission \"%(permission)s\" revoked from %(ct_name)s: %(requester)s."
+msgstr "Permiso \"%(permission)s\" revocado de %(ct_name)s: %(requester)s"
+
+#: views.py:157
+#, python-format
+msgid ""
+"%(ct_name)s: %(requester)s doesn't have the permission "
+"\"%(permission)s\"."
+msgstr " %(ct_name)s: %(requester)s, no tiene el permiso \"%(permission)s\"."
+
+#: views.py:210
+#, python-format
+msgid "%(obj)s added successfully to the role: %(role)s."
+msgstr " %(obj)s ha sido añadido exitosamente a la función: %(role)s."
+
+#: views.py:226
+#, python-format
+msgid "%(obj)s removed successfully from the role: %(role)s."
+msgstr " %(obj)s removido con éxito de la función: %(role)s."
+
+#: views.py:229
+#, python-format
+msgid "Unable to remove %(obj)s from the role: %(role)s."
+msgstr "No se puede remover %(obj)s de la función: %(role)s."
+
+#: views.py:243
+msgid "non members of role"
+msgstr "no miembros de la función"
+
+#: views.py:246
+msgid "Add"
+msgstr "Agregar"
+
+#: views.py:250
+msgid "members of role"
+msgstr "miembros de la función"
+
+#: views.py:253
+msgid "Remove"
+msgstr "Remover"
