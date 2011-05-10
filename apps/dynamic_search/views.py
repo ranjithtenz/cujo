@@ -46,7 +46,7 @@ def results(request, form=None):
         'query_string': query_string,
         'form': form,
         'form_title': _(u'Search'),
-        'hide_header': True,
+        #'hide_header': True,
         'form_hide_required_text': True,
         'hide_links': True,
     })
