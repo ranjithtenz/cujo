@@ -33,17 +33,19 @@
         </style> 
         {% block web_theme_stylesheets %}{% endblock %}
 
-        <script type="text/javascript" charset="utf-8" src="{{ MEDIA_URL }}web_theme_media/javascripts/jquery-1.5.2.min.js"></script>
+        <script type="text/javascript" charset="utf-8" src="{{ MEDIA_URL }}web_theme_media/javascripts/jquery-1.6.min.js"></script>
         {% if enable_scroll_js %}
-            <script type="text/javascript" charset="utf-8" src="{{ MEDIA_URL }}web_theme_media/javascripts/jquery.scrollTo.js"></script>#}
-            <script type="text/javascript" charset="utf-8" src="{{ MEDIA_URL }}web_theme_media/javascripts/jquery.localscroll.js"></script>#}
+            <script type="text/javascript" charset="utf-8" src="{{ MEDIA_URL }}web_theme_media/javascripts/jquery.scrollTo.js"></script>
+            <script type="text/javascript" charset="utf-8" src="{{ MEDIA_URL }}web_theme_media/javascripts/jquery.localscroll.js"></script>
         {% endif %}
 
         {% block web_theme_javascript %}{% endblock %}
        
         <script type="text/javascript">
             $(document).ready(function() {
-                $(".message").fadeIn("slow");
+				$(".message").fadeOut("slow", function () {
+				  $(this).fadeIn("slow");
+				});
                 $(".dismiss").click(function(){
                     $(this).parent().parent().fadeOut("slow"); return false;
                 });
@@ -88,7 +90,7 @@
                             <div class="inner">
                                 <div class="flash">
                                     {% for message in messages %}
-                                        <div class="message{% if message.tags %}{% if 'success' in message.tags %} notice{% endif %} {{ message.tags }}{% else %} notice{% endif %}" style="display: none;">
+                                        <div class="message{% if message.tags %}{% if 'success' in message.tags %} notice{% endif %} {{ message.tags }}{% else %} notice{% endif %}">
                                             <p>
                                                 {{ message }}
                                                 <span class="dismiss-all"><a title={% trans "dismiss all notifications" %}>[{% trans "close all" %}]</a></span>
