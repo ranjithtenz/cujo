@@ -21,3 +21,7 @@
 .choice_form {
     min-width: 200px;
 }
+
+.short_textbox {
+	width: 50px !important;
+}
