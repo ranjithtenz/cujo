@@ -90,9 +90,12 @@ TEMPLATE_LOADERS = (
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+    'common.middleware.login_required_middleware.LoginRequiredMiddleware',
+	'permissions.middleware.permission_denied_middleware.PermissionDeniedMiddleware',
     'pagination.middleware.PaginationMiddleware',
 )
 
@@ -169,6 +172,25 @@ SEARCH_SHOW_OBJECT_TYPE = False
 #--------- Django -------------------
 LOGIN_URL = '/login/'
 LOGIN_REDIRECT_URL = '/'
+#-------- LoginRequiredMiddleware ----------
+LOGIN_EXEMPT_URLS = (
+    r'^favicon\.ico$',
+    r'^about\.html$',
+    r'^legal/',  # allow the entire /legal/* subsection
+    r'^%s-site_media/' % PROJECT_NAME,
+
+    r'^accounts/register/$',
+    r'^accounts/register/complete/$',
+    r'^accounts/register/closed/$',
+
+    r'^accounts/activate/complete/',
+    r'^accounts/activate/(?P<activation_key>\w+)/$',
+
+    r'^password/reset/$',
+    r'^password/reset/confirm/(?P<uidb36>[0-9A-Za-z]+)-(?P<token>.+)/$',
+    r'^password/reset/complete/$',
+    r'^password/reset/done/$',
+)
 
 try:
     from settings_local import *
