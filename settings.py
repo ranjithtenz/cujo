@@ -126,6 +126,7 @@ INSTALLED_APPS = (
     'sentry',
     'sentry.client',
     'sentry.client.celery',
+    'reminders',
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (

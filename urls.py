@@ -14,6 +14,7 @@ urlpatterns = patterns('',
     (r'^sentry/', include('sentry.urls')),
     (r'^settings/', include('smart_settings.urls')),
     (r'^permissions/', include('permissions.urls')),
+    (r'^reminders/', include('reminders.urls')),
 )
 
 def handler500(request):
