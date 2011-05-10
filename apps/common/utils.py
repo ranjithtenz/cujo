@@ -110,11 +110,13 @@ def exists_with_famfam(path):
         return exc
 
 
-def two_state_template(state, famfam_ok_icon=u'tick', famfam_fail_icon=u'cross'):
+def two_state_template(state, famfam_ok_icon=u'tick', famfam_fail_icon=u'cross', states=2):
     if state:
         return u'<span class="famfam active famfam-%s"></span>' % famfam_ok_icon
-    else:
+    elif states == 2:
         return u'<span class="famfam active famfam-%s"></span>' % famfam_fail_icon
+    else:
+		return u''
 
 
 # The code here is based loosely on John Cardinal's notes found at:
