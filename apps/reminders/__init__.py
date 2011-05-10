@@ -45,19 +45,19 @@ register_menu([
 
 register_model_list_columns(Reminder, [
 		{
-			'name': _(u'Creation date'),
+			'name': _(u'creation date'),
 			'attribute': lambda x: x.datetime_created.date()
 		},
 		{
-			'name': _(u'Expiration date'),
-			'attribute': lambda x: x.datetime_expire.date()
+			'name': _(u'expiration date'),
+			'attribute': lambda x: x.datetime_expire
 		},
 		{
 			'name': _('days'),
-			'attribute': lambda x: (x.datetime_expire - x.datetime_created).days
+			'attribute': lambda x: (x.datetime_expire - x.datetime_created.date()).days
 		},
 		{
 			'name': _('expired?'),
-			'attribute': lambda x: two_state_template((x.datetime_expire < datetime.datetime.now()), states=1)
+			'attribute': lambda x: two_state_template((x.datetime_expire < datetime.datetime.now().date()), states=1)
 		}	
     ])

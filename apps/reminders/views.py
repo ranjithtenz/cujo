@@ -40,12 +40,16 @@ def reminder_add(request, form_class=ReminderForm):
 		if form.is_valid():
 			if form_class == ReminderForm_days:
 				reminder = form.save(commit=False)
-				reminder.datetime_expire = reminder.datetime_created + datetime.timedelta(days=int(form.cleaned_data['days']))
+				reminder.datetime_expire = reminder.datetime_created.date() + datetime.timedelta(days=int(form.cleaned_data['days']))
 				reminder.save()
 			else:
 				reminder = form.save()
 			messages.success(request, _(u'Reminder "%s" created successfully.') % reminder)
-			return HttpResponseRedirect(next)
+			return HttpResponseRedirect(reverse('reminder_list'))
+		else:
+			print 'no VALID'
+			print form.errors
+
 	else:
 		form = form_class()
 		
@@ -69,12 +73,12 @@ def reminder_edit(request, reminder_id, form_class=ReminderForm):
 		if form.is_valid():
 			if form_class == ReminderForm_days:
 				reminder = form.save(commit=False)
-				reminder.datetime_expire = reminder.datetime_created + datetime.timedelta(days=int(form.cleaned_data['days']))
+				reminder.datetime_expire = reminder.datetime_created.date() + datetime.timedelta(days=int(form.cleaned_data['days']))
 				reminder.save()
 			else:
 				reminder = form.save()
 			messages.success(request, _(u'Reminder "%s" edited successfully.') % reminder)
-			return HttpResponseRedirect(next)
+			return HttpResponseRedirect(reverse('reminder_list'))
 	else:
 		form = form_class(instance=reminder)
 		
@@ -141,11 +145,11 @@ def reminder_view(request, reminder_id):
 	
 	reminder = get_object_or_404(Reminder, pk=reminder_id)
 	
-	expired = (datetime.datetime.now() - reminder.datetime_expire).days
+	expired = (datetime.datetime.now().date() - reminder.datetime_expire).days
 	expired_template = _(u' (expired %s days)') % expired
 	
 	form = ReminderForm_view(instance=reminder, extra_fields=[
-        {'label': _(u'Days'), 'field': lambda x: (x.datetime_expire - x.datetime_created).days},
+        {'label': _(u'Days'), 'field': lambda x: (x.datetime_expire - x.datetime_created.date()).days},
 	])
 		
 	return render_to_response('generic_detail.html', {
@@ -168,7 +172,7 @@ def expired_remider_list(request, expiration_datetime=datetime.datetime.now()):
 		'extra_columns': [
 			{
 				'name': _('days expired'),
-				'attribute': lambda x: (datetime.datetime.now() - x.datetime_expire).days
+				'attribute': lambda x: (datetime.datetime.now().date() - x.datetime_expire).days
 			}
 		]
 
