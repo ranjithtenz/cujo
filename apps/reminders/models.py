@@ -8,8 +8,9 @@ from dynamic_search.api import register
 
 class Reminder(models.Model):
 	label = models.CharField(max_length=64, verbose_name=_(u'label'))
-	datetime_created = models.DateTimeField(blank=True, verbose_name=_(u'creation date'))
-	datetime_expire = models.DateTimeField(verbose_name=_(u'expiration date'))
+	notes = models.TextField(blank=True, verbose_name=_(u'notes'))
+	datetime_created = models.DateTimeField(blank=True, verbose_name=_(u'creation date'), default=datetime.datetime.now())
+	datetime_expire = models.DateField(verbose_name=_(u'expiration date'))
 	
 	class Meta:
 		verbose_name = _(u'reminder')
@@ -33,4 +34,4 @@ class Reminder(models.Model):
 
 
 
-register(Reminder, _(u'remider'), [u'label'])
+register(Reminder, _(u'reminder'), [u'label', 'notes'])

@@ -1,0 +1,183 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# 
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-05-10 16:38-0400\n"
+"PO-Revision-Date: 2011-05-10 17:06\n"
+"Last-Translator:   <admin@admin.com>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: \n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Translated-Using: django-rosetta 0.6.0\n"
+
+#: __init__.py:21
+msgid "View reminder"
+msgstr "Ver recordatorio"
+
+#: __init__.py:22
+msgid "Create reminder"
+msgstr "Crear recordatorio"
+
+#: __init__.py:23
+msgid "Edit reminder"
+msgstr "Editar recordatorio"
+
+#: __init__.py:24
+msgid "Delete reminder"
+msgstr "Eliminar recordatorio "
+
+#: __init__.py:27
+msgid "reminder list"
+msgstr "lista de recordatorios"
+
+#: __init__.py:28
+msgid "expired reminder list"
+msgstr "lista de recordatorios expirados"
+
+#: __init__.py:29
+msgid "create reminder (calendar)"
+msgstr "crear recordatorio (calendario)"
+
+#: __init__.py:30
+msgid "create reminder (days)"
+msgstr "crear recordatorio (días)"
+
+#: __init__.py:31
+msgid "edit (calendar)"
+msgstr "editar (calendario)"
+
+#: __init__.py:32
+msgid "edit (days)"
+msgstr "editar (días)"
+
+#: __init__.py:34 __init__.py:35
+msgid "delete"
+msgstr "eliminar"
+
+#: __init__.py:42 models.py:17 views.py:27
+msgid "reminders"
+msgstr "recordatorios"
+
+#: __init__.py:48
+msgid "Creation date"
+msgstr "Fecha de creación"
+
+#: __init__.py:52
+msgid "Expiration date"
+msgstr "Fecha de caducidad"
+
+#: __init__.py:56
+msgid "days"
+msgstr "días"
+
+#: __init__.py:60
+msgid "expired?"
+msgstr "¿Caducado?"
+
+#: forms.py:33
+msgid "Expiration days"
+msgstr "Días para vencimiento"
+
+#: models.py:10
+msgid "label"
+msgstr "etiqueta"
+
+#: models.py:11
+msgid "notes"
+msgstr "notas"
+
+#: models.py:12
+msgid "creation date"
+msgstr "fecha de creación"
+
+#: models.py:13
+msgid "expiration date"
+msgstr "fecha de caducidad"
+
+#: models.py:16 models.py:37 views.py:118
+msgid "reminder"
+msgstr "recordatorio"
+
+#: views.py:47
+#, fuzzy, python-format
+msgid "Reminder \"%s\" created successfully."
+msgstr "Recordatorio \"%s\" editado exitosamente."
+
+#: views.py:53
+#, python-format
+msgid "Create reminder (%s)"
+msgstr "Crear recordatorio (%s)"
+
+#: views.py:76
+#, python-format
+msgid "Reminder \"%s\" edited successfully."
+msgstr "Recordatorio \"%s\" editado exitosamente."
+
+#: views.py:82
+#, python-format
+msgid "Edit reminder \"%s\""
+msgstr "Editar recordatorio \"%s\""
+
+#: views.py:100
+msgid "Must provide at least one reminder."
+msgstr "Debe proveer al menos un recordatorio."
+
+#: views.py:110
+#, python-format
+msgid "Reminder \"%s\" deleted successfully."
+msgstr "Recordatorio \"%s\" eliminado con exitosamente."
+
+#: views.py:112
+#, python-format
+msgid "Error deleting reminder \"%(reminder)s\"; %(error)s"
+msgstr "Error al eliminar el recordatorio \"%(reminder)s\"; %(error)s "
+
+#: views.py:125
+#, python-format
+msgid "Are you sure you wish to delete the reminder \"%s\"?"
+msgstr "¿Está seguro que quiere eliminar el recordatorio \"%s\"?"
+
+#: views.py:127
+#, python-format
+msgid "Are you sure you wish to delete the reminders: %s?"
+msgstr "¿Está seguro que quiere eliminar los recordatorios: %s?"
+
+#: views.py:145
+#, python-format
+msgid " (expired %s days)"
+msgstr "(vencido %s días)"
+
+#: views.py:148
+msgid "Days"
+msgstr "Días"
+
+#: views.py:152
+#, python-format
+msgid "Detail for reminder \"%(reminder)s\"%(expired)s"
+msgstr "Detalle de recordatorio \"%(reminder)s\" %(expired)s "
+
+#: views.py:166
+msgid "expired reminders"
+msgstr "recordatorios vencidos"
+
+#: views.py:170
+msgid "days expired"
+msgstr "días vencido"
+
+#: conf/settings.py:12
+msgid "Interval in seconds to wait before checking for expired reminders."
+msgstr ""
+"Intervalo en segundos a esperar antes de comprobar los recordatorios "
+"vencidos."
+
+#~ msgid "Reminder \"%s\" added successfully."
+#~ msgstr "Recordatorio \"%s\", creado exitosamente."

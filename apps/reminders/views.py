@@ -1,3 +1,5 @@
+import datetime
+
 from django.utils.translation import ugettext_lazy as _
 from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response, get_object_or_404
@@ -11,7 +13,7 @@ from django.utils.http import urlencode
 
 from permissions.api import check_permissions
 
-from reminders.forms import ReminderForm, ReminderForm_view
+from reminders.forms import ReminderForm, ReminderForm_view, ReminderForm_days
 from reminders.models import Reminder
 from reminders import PERMISSION_REMINDER_VIEW, PERMISSION_REMINDER_CREATE, \
 	PERMISSION_REMINDER_EDIT, PERMISSION_REMINDER_DELETE
@@ -28,29 +30,34 @@ def reminder_list(request, object_list=None, title=None):
 	}, context_instance=RequestContext(request))
 
 
-def reminder_add(request):
+def reminder_add(request, form_class=ReminderForm):
 	check_permissions(request.user, u'reminders', [PERMISSION_REMINDER_CREATE])
 	
 	next = request.POST.get('next', request.GET.get('next', request.META.get('HTTP_REFERER', u'/')))
 	
 	if request.method == 'POST':
-		form = ReminderForm(request.POST)
+		form = form_class(request.POST)
 		if form.is_valid():
-			reminder = form.save()
-			messages.success(request, _(u'Reminder "%s" added successfully.') % reminder)
+			if form_class == ReminderForm_days:
+				reminder = form.save(commit=False)
+				reminder.datetime_expire = reminder.datetime_created + datetime.timedelta(days=int(form.cleaned_data['days']))
+				reminder.save()
+			else:
+				reminder = form.save()
+			messages.success(request, _(u'Reminder "%s" created successfully.') % reminder)
 			return HttpResponseRedirect(next)
 	else:
-		form = ReminderForm()
+		form = form_class()
 		
 	return render_to_response('generic_form.html', {
-		'title': _(u'Create reminder'),
+		'title': _(u'Create reminder (%s)') % (u'calendar' if form_class == ReminderForm else u'days'),
 		'form': form,
 		'next': next,
 	},
 	context_instance=RequestContext(request))
 	
 
-def reminder_edit(request, reminder_id):
+def reminder_edit(request, reminder_id, form_class=ReminderForm):
 	check_permissions(request.user, u'reminders', [PERMISSION_REMINDER_EDIT])
 	
 	reminder = get_object_or_404(Reminder, pk=reminder_id)
@@ -58,13 +65,18 @@ def reminder_edit(request, reminder_id):
 	next = request.POST.get('next', request.GET.get('next', request.META.get('HTTP_REFERER', u'/')))
 	
 	if request.method == 'POST':
-		form = ReminderForm(instance=reminder, data=request.POST)
+		form = form_class(instance=reminder, data=request.POST)
 		if form.is_valid():
-			reminder = form.save()
+			if form_class == ReminderForm_days:
+				reminder = form.save(commit=False)
+				reminder.datetime_expire = reminder.datetime_created + datetime.timedelta(days=int(form.cleaned_data['days']))
+				reminder.save()
+			else:
+				reminder = form.save()
 			messages.success(request, _(u'Reminder "%s" edited successfully.') % reminder)
 			return HttpResponseRedirect(next)
 	else:
-		form = ReminderForm(instance=reminder)
+		form = form_class(instance=reminder)
 		
 	return render_to_response('generic_form.html', {
 		'title': _(u'Edit reminder "%s"') % reminder,
@@ -81,7 +93,7 @@ def reminder_delete(request, reminder_id=None, reminder_id_list=None):
 
     if reminder_id:
         reminders = [get_object_or_404(Reminder, pk=reminder_id)]
-        #post_action_redirect = reverse('reminder_list')
+        post_action_redirect = reverse('reminder_list')
     elif reminder_id_list:
         reminders = [get_object_or_404(Reminder, pk=reminder_id) for reminder_id in reminder_id_list.split(',')]
     else:
@@ -123,16 +135,41 @@ def reminder_multiple_delete(request):
         request, reminder_id_list=request.GET.get('id_list', [])
     )
 
+
 def reminder_view(request, reminder_id):
 	check_permissions(request.user, u'reminders', [PERMISSION_REMINDER_VIEW])
 	
 	reminder = get_object_or_404(Reminder, pk=reminder_id)
-
-	form = ReminderForm_view(instance=reminder)
+	
+	expired = (datetime.datetime.now() - reminder.datetime_expire).days
+	expired_template = _(u' (expired %s days)') % expired
+	
+	form = ReminderForm_view(instance=reminder, extra_fields=[
+        {'label': _(u'Days'), 'field': lambda x: (x.datetime_expire - x.datetime_created).days},
+	])
 		
-	return render_to_response('generic_form.html', {
-		'title': _(u'Detail for reminder "%s"') % reminder,
+	return render_to_response('generic_detail.html', {
+		'title': _(u'Detail for reminder "%(reminder)s"%(expired)s') % {
+			'reminder': reminder, 'expired': expired_template if expired > 0 else u''},
 		'form': form,
 		'object': reminder,
 	},
 	context_instance=RequestContext(request))
+	
+	
+def expired_remider_list(request, expiration_datetime=datetime.datetime.now()):
+	check_permissions(request.user, u'reminders', [PERMISSION_REMINDER_VIEW])
+	expired_reminders = Reminder.objects.filter(datetime_expire__lt=expiration_datetime)
+	
+	return render_to_response('generic_list.html', {
+		'object_list': expired_reminders,
+		'title': _(u'expired reminders'),
+		'multi_select_as_buttons': True,
+		'extra_columns': [
+			{
+				'name': _('days expired'),
+				'attribute': lambda x: (datetime.datetime.now() - x.datetime_expire).days
+			}
+		]
+
+	}, context_instance=RequestContext(request))
