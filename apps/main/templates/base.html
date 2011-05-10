@@ -123,7 +123,7 @@
             {% endif %}
         {% endif %}
     </li>
-
+{% comment %}
     {% get_setting "MIDDLEWARE_CLASSES" as middleware_classes %}
     {% if "django.middleware.locale.LocaleMiddleware" in middleware_classes %}
         <li>
@@ -137,6 +137,7 @@
             </form>                                
         </li>
     {% endif %}
+ {% endcomment %}
     {% get_setting "LOGIN_URL" as login_url %}
     <li><a class="logout" href="{% if user.is_anonymous %}{% url login_view %}?next=/{% else %}{% url logout_view %}?next={{ login_url }}{% endif %}">{% if user.is_anonymous %}{% trans "Login" %}{% else %}{% trans "Logout" %}{% endif %}</a></li>
 {% endblock %}
