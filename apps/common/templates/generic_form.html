@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load subtemplates_tags %}
 {% block title %} :: {% with "true" as striptags %}{% include "calculate_form_title.html" %}{% endwith %}{% endblock %}
 
 {% block sidebar %}
@@ -93,6 +94,16 @@
         {% endwith %}
         {% endwith %}
     {% endfor %}
+
+	{% for subtemplate in subtemplates_list %}
+			<div class="">
+				{% render_subtemplate subtemplate.name subtemplate.context as rendered_subtemplate %}
+				{{ rendered_subtemplate }}
+			</div>
+			{% if subtemplate.grid_clear or not subtemplate.grid %}
+				<div class=""></div> 
+			{% endif %}
+	{% endfor %}    
 </div>
 
     {% for subtemplate in subtemplates_dict %}

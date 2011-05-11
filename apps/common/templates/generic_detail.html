@@ -45,17 +45,17 @@
 {% endblock %}
 
 {% block content %}
-<div class="container_12">
+<div class="">
 
     {% if form %}
         {% with "true" as read_only %}
-            <div class="grid_{{ grid|default:11 }}">
+            <div class="">
                 <div class="generic_subform">
                     {% include "generic_form_subtemplate.html" %}
                 </div>
             </div>
             {% if grid_clear or not grid %}
-                <div class="clear"></div> 
+                <div class=""></div> 
             {% endif %}
         {% endwith %}
     {% endif %}
@@ -72,7 +72,7 @@
         {% with form.object_name as object_name %}
         {% with form.form_action as form_action %}
         {% with "true" as read_only %}        
-            <div class="grid_{{ form.grid|default:11 }}">
+            <div class="">
         {% with form.form as form %}
             <div class="generic_subform">
                 {% include "generic_form_subtemplate.html" %}
@@ -80,7 +80,7 @@
         {% endwith %}
             </div>
             {% if form.grid_clear or not form.grid %}
-                <div class="clear"></div> 
+                <div class=""></div> 
             {% endif %}
         
         {% endwith %}
@@ -94,7 +94,7 @@
 
     {% for subtemplate in subtemplates_list %}
             
-        <div class="grid_{{ subtemplate.grid|default:11 }}">
+        <div class="">
 
     {% if subtemplate.form %}
         {% with subtemplate.submit_method as submit_method %}
@@ -120,7 +120,7 @@
     {% endif %}
         </div>
         {% if subtemplate.grid_clear or not subtemplate.grid %}
-            <div class="clear"></div> 
+            <div class=""></div> 
         {% endif %}
     {% endfor %}
 </div>
