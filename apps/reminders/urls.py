@@ -5,7 +5,8 @@ from reminders.forms import ReminderForm_days
 
 urlpatterns = patterns('reminders.views',
     url(r'^list/$', 'reminder_list', (), 'reminder_list'),
-    url(r'^list/expired/$', 'expired_remider_list', (), 'expired_remider_list'),
+    url(r'^list/expired/now/$', 'expired_remider_list', (), 'expired_remider_list'),
+    url(r'^list/expired/future/$', 'future_expired_remider_list', (), 'future_expired_remider_list'),
     url(r'^add/date/$', 'reminder_add', (), 'reminder_add'),
     url(r'^add/days/$', 'reminder_add', ({'form_class': ReminderForm_days}), 'reminder_add_days'),
     url(r'^edit/(?P<reminder_id>\d+)/date/$', 'reminder_edit', (), 'reminder_edit'),

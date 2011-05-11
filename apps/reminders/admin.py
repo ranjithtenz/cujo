@@ -1,17 +1,16 @@
 from django.contrib import admin
 
-from reminders.models import Reminder
+from reminders.models import Reminder, Participant
 
-#class PermissionHolderInline(admin.StackedInline):
-#    model = PermissionHolder
-#    extra = 1
-#    classes = ('collapse-open',)
-#    allow_add = True
+class ParticipantInline(admin.StackedInline):
+    model = Participant
+    extra = 1
+    classes = ('collapse-open',)
+    allow_add = True
 
 
-#class PermissionAdmin(admin.ModelAdmin):
-#    inlines = [PermissionHolderInline]
-#    list_display = ('namespace', 'name', 'label')
-#    list_display_links = list_display
+class ReminderAdmin(admin.ModelAdmin):
+    inlines = [ParticipantInline]
 
-admin.site.register(Reminder)
+
+admin.site.register(Reminder, ReminderAdmin)
