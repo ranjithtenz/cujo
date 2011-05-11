@@ -6,6 +6,16 @@ from django.contrib.auth.models import User
 
 from dynamic_search.api import register
 
+PARTICIPANT_ROLE_CREATOR = u'cr'
+PARTICIPANT_ROLE_WATCHER = u'wa'
+PARTICIPANT_ROLE_EDITOR = u'ed'
+
+PARTICIPANT_ROLE_CHOICES = (
+	(PARTICIPANT_ROLE_CREATOR, _(u'Creator')),
+	(PARTICIPANT_ROLE_EDITOR, _(u'Editor')),
+	(PARTICIPANT_ROLE_WATCHER, _(u'Watcher')),
+)
+
 
 class Reminder(models.Model):
 	label = models.CharField(max_length=64, verbose_name=_(u'label'))
@@ -36,13 +46,15 @@ class Reminder(models.Model):
 class Participant(models.Model):
 	reminder = models.ForeignKey(Reminder, verbose_name=_(u'reminder'))
 	user = models.ForeignKey(User, verbose_name=_(u'user'))
+	role = models.CharField(max_length=2, choices=PARTICIPANT_ROLE_CHOICES, verbose_name=_(u'role'))
 	
 	class Meta:
+		unique_together = ('reminder', 'user', 'role')
 		verbose_name = _(u'participant')
 		verbose_name_plural = _(u'participants')
 		
 	def __unicode__(self):
-		return u'%s - %s' % (self.reminder, self.user)
+		return unicode(self.user.get_full_name() if self.user.get_full_name() else self.user)
 
 
 register(Reminder, _(u'reminder'), [u'label', 'notes', 'participant__user__username', 'participant__user__first_name', 'participant__user__last_name'])

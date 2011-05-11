@@ -3,10 +3,11 @@ import datetime
 from django import forms
 from django.utils.translation import ugettext_lazy as _
 from django.forms.extras.widgets import SelectDateWidget
+from django.contrib.auth.models import User
 
 from common.forms import DetailForm
 
-from reminders.models import Reminder
+from reminders.models import Reminder, Participant, PARTICIPANT_ROLE_CHOICES
 
 
 class ReminderForm(forms.ModelForm):
@@ -46,3 +47,10 @@ class ReminderForm_view(DetailForm):
 
 class FutureDateForm(forms.Form):
 	future_date = forms.DateField(initial=datetime.datetime.now(), widget=SelectDateWidget())
+
+
+class ParticipantForm_add(forms.Form):
+	# TODO: filter userusers and staff
+	user = forms.ModelChoiceField(queryset=User.objects.all(), label=_(u'User'))
+	# TODO: Exclude creator role
+	role = forms.ChoiceField(choices=PARTICIPANT_ROLE_CHOICES, label=_(u'Role'))

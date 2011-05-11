@@ -10,7 +10,7 @@ from main.api import register_diagnostic, register_tool
 from permissions.api import register_permissions
 from common.utils import two_state_template
 
-from reminders.models import Reminder
+from reminders.models import Reminder, Participant
 
 PERMISSION_REMINDER_VIEW = 'reminder_view'
 PERMISSION_REMINDER_VIEW_ALL = 'reminder_view_all'
@@ -41,8 +41,12 @@ future_expired_remider_list = {'text': _(u'future expired reminders'), 'view': '
 reminder_delete = {'text': _(u'delete'), 'view': 'reminder_delete', 'args': 'object.id', 'famfam': 'hourglass_delete', 'permissions': {'namespace': 'reminders', 'permissions': [PERMISSION_REMINDER_DELETE]}}
 reminder_multiple_delete = {'text': _(u'delete'), 'view': 'reminder_multiple_delete', 'famfam': 'hourglass_delete', 'permissions': {'namespace': 'reminders', 'permissions': [PERMISSION_REMINDER_DELETE]}}
 
-register_links(['future_expired_remider_list', 'reminder_view', 'reminder_edit', 'reminder_edit_days', 'reminder_delete', 'reminder_list', 'expired_remider_list', 'reminder_add', 'reminder_add_days'], [reminder_list, expired_remider_list, future_expired_remider_list, reminder_add, reminder_add_days], menu_name='sidebar')
-register_links([Reminder], [reminder_edit, reminder_edit_days, reminder_delete])
+reminder_participant_add = {'text': _(u'add participant'), 'view': 'participant_add', 'args': 'object.pk', 'famfam': 'user_add', 'permissions': {'namespace': 'reminders', 'permissions': [PERMISSION_REMINDER_EDIT]}}
+reminder_participant_remove = {'text': _(u'remove'), 'view': 'participant_remove', 'args': 'object.pk', 'famfam': 'user_delete', 'permissions': {'namespace': 'reminders', 'permissions': [PERMISSION_REMINDER_EDIT]}}
+
+register_links(['participant_remove', 'reminder_participant_add', 'future_expired_remider_list', 'reminder_view', 'reminder_edit', 'reminder_edit_days', 'reminder_delete', 'reminder_list', 'expired_remider_list', 'reminder_add', 'reminder_add_days'], [reminder_list, expired_remider_list, future_expired_remider_list, reminder_add, reminder_add_days], menu_name='sidebar')
+register_links([Reminder], [reminder_edit, reminder_edit_days, reminder_participant_add, reminder_delete])
+register_links([Participant], [reminder_participant_remove])
 register_multi_item_links(['reminder_list'], [reminder_multiple_delete])
 
 register_menu([
@@ -68,3 +72,14 @@ register_model_list_columns(Reminder, [
 			'attribute': lambda x: two_state_template((x.datetime_expire < datetime.datetime.now().date()), states=1)
 		}	
     ])
+
+register_model_list_columns(Participant, [
+	{
+		'name': _(u'name'),
+		'attribute': lambda x: x.user.get_full_name() if x.user.get_full_name() else x.user
+	},
+	{
+		'name': _(u'role'),
+		'attribute': lambda x: x.get_role_display()
+	}	
+])
