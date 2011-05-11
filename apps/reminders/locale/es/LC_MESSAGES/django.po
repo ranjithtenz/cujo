@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-05-10 16:38-0400\n"
-"PO-Revision-Date: 2011-05-10 17:06\n"
+"POT-Creation-Date: 2011-05-11 17:46-0400\n"
+"PO-Revision-Date: 2011-05-11 17:52\n"
 "Last-Translator:   <admin@admin.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -19,165 +19,259 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Translated-Using: django-rosetta 0.6.0\n"
 
-#: __init__.py:21
+#: __init__.py:24
 msgid "View reminder"
 msgstr "Ver recordatorio"
 
-#: __init__.py:22
+#: __init__.py:25
+msgid "View all reminders"
+msgstr "Ver todos los recordatorios"
+
+#: __init__.py:26
 msgid "Create reminder"
 msgstr "Crear recordatorio"
 
-#: __init__.py:23
+#: __init__.py:27
 msgid "Edit reminder"
 msgstr "Editar recordatorio"
 
-#: __init__.py:24
+#: __init__.py:28
+msgid "Edit all reminders"
+msgstr "Editar todos los recordatorios"
+
+#: __init__.py:29
 msgid "Delete reminder"
 msgstr "Eliminar recordatorio "
 
-#: __init__.py:27
+#: __init__.py:30
+msgid "Delete all reminders"
+msgstr "Eliminar todos los recordatorios"
+
+#: __init__.py:33
 msgid "reminder list"
 msgstr "lista de recordatorios"
 
-#: __init__.py:28
+#: __init__.py:34
 msgid "expired reminder list"
 msgstr "lista de recordatorios expirados"
 
-#: __init__.py:29
+#: __init__.py:35
 msgid "create reminder (calendar)"
 msgstr "crear recordatorio (calendario)"
 
-#: __init__.py:30
+#: __init__.py:36
 msgid "create reminder (days)"
 msgstr "crear recordatorio (días)"
 
-#: __init__.py:31
+#: __init__.py:37
 msgid "edit (calendar)"
 msgstr "editar (calendario)"
 
-#: __init__.py:32
+#: __init__.py:38
 msgid "edit (days)"
 msgstr "editar (días)"
 
-#: __init__.py:34 __init__.py:35
+#: __init__.py:39
+msgid "future expired reminders"
+msgstr "recordatorios expirados en el futuro"
+
+#: __init__.py:41 __init__.py:42
 msgid "delete"
 msgstr "eliminar"
 
-#: __init__.py:42 models.py:17 views.py:27
+#: __init__.py:44
+msgid "add participant"
+msgstr "añadir participante"
+
+#: __init__.py:45
+msgid "remove"
+msgstr "remover"
+
+#: __init__.py:53 models.py:28 views.py:42
 msgid "reminders"
 msgstr "recordatorios"
 
-#: __init__.py:48
-msgid "Creation date"
-msgstr "Fecha de creación"
-
-#: __init__.py:52
-msgid "Expiration date"
-msgstr "Fecha de caducidad"
-
-#: __init__.py:56
-msgid "days"
-msgstr "días"
-
-#: __init__.py:60
-msgid "expired?"
-msgstr "¿Caducado?"
-
-#: forms.py:33
-msgid "Expiration days"
-msgstr "Días para vencimiento"
-
-#: models.py:10
-msgid "label"
-msgstr "etiqueta"
-
-#: models.py:11
-msgid "notes"
-msgstr "notas"
-
-#: models.py:12
+#: __init__.py:59 models.py:23
 msgid "creation date"
 msgstr "fecha de creación"
 
-#: models.py:13
+#: __init__.py:63 models.py:24
 msgid "expiration date"
 msgstr "fecha de caducidad"
 
-#: models.py:16 models.py:37 views.py:118
+#: __init__.py:67
+msgid "days"
+msgstr "días"
+
+#: __init__.py:71
+msgid "expired?"
+msgstr "¿Expirado?"
+
+#: __init__.py:78
+msgid "name"
+msgstr "nombre"
+
+#: __init__.py:82 models.py:49
+msgid "role"
+msgstr "función"
+
+#: forms.py:38
+msgid "Expiration days"
+msgstr "Días para vencimiento"
+
+#: forms.py:54
+msgid "User"
+msgstr "Usuario"
+
+#: forms.py:56
+msgid "Role"
+msgstr "Función"
+
+#: models.py:14
+msgid "Creator"
+msgstr "Creador"
+
+#: models.py:15
+msgid "Editor"
+msgstr "Editor"
+
+#: models.py:16
+msgid "Watcher"
+msgstr "Observante"
+
+#: models.py:21
+msgid "label"
+msgstr "etiqueta"
+
+#: models.py:22
+msgid "notes"
+msgstr "notas"
+
+#: models.py:27 models.py:47 models.py:60 views.py:180
 msgid "reminder"
 msgstr "recordatorio"
 
-#: views.py:47
-#, fuzzy, python-format
-msgid "Reminder \"%s\" created successfully."
-msgstr "Recordatorio \"%s\" editado exitosamente."
+#: models.py:48
+msgid "user"
+msgstr "usuario"
 
-#: views.py:53
+#: models.py:53 views.py:349
+msgid "participant"
+msgstr "participante"
+
+#: models.py:54 views.py:119 views.py:232
+msgid "participants"
+msgstr "participantes"
+
+#: views.py:64
+#, python-format
+msgid "Reminder \"%s\" created successfully."
+msgstr "Recordatorio \"%s\" creado exitosamente."
+
+#: views.py:70
 #, python-format
 msgid "Create reminder (%s)"
 msgstr "Crear recordatorio (%s)"
 
-#: views.py:76
+#: views.py:99
 #, python-format
 msgid "Reminder \"%s\" edited successfully."
 msgstr "Recordatorio \"%s\" editado exitosamente."
 
-#: views.py:82
+#: views.py:105
+#, python-format
+msgid "(expired %s days)"
+msgstr "(expirado %s días)"
+
+#: views.py:110
+#, python-format
+msgid "Edit reminder \"%(reminder)s\" %(expired)s"
+msgstr "Editar recordatorio \"%(reminder)s\" %(expired)s"
+
+#: views.py:127
 #, python-format
 msgid "Edit reminder \"%s\""
 msgstr "Editar recordatorio \"%s\""
 
-#: views.py:100
+#: views.py:162
 msgid "Must provide at least one reminder."
 msgstr "Debe proveer al menos un recordatorio."
 
-#: views.py:110
+#: views.py:172
 #, python-format
 msgid "Reminder \"%s\" deleted successfully."
 msgstr "Recordatorio \"%s\" eliminado con exitosamente."
 
-#: views.py:112
+#: views.py:174
 #, python-format
 msgid "Error deleting reminder \"%(reminder)s\"; %(error)s"
 msgstr "Error al eliminar el recordatorio \"%(reminder)s\"; %(error)s "
 
-#: views.py:125
+#: views.py:187
 #, python-format
 msgid "Are you sure you wish to delete the reminder \"%s\"?"
 msgstr "¿Está seguro que quiere eliminar el recordatorio \"%s\"?"
 
-#: views.py:127
+#: views.py:189
 #, python-format
 msgid "Are you sure you wish to delete the reminders: %s?"
 msgstr "¿Está seguro que quiere eliminar los recordatorios: %s?"
 
-#: views.py:145
+#: views.py:213
 #, python-format
 msgid " (expired %s days)"
-msgstr "(vencido %s días)"
+msgstr "(expirado %s días)"
 
-#: views.py:148
+#: views.py:216
 msgid "Days"
 msgstr "Días"
 
-#: views.py:152
+#: views.py:223
 #, python-format
 msgid "Detail for reminder \"%(reminder)s\"%(expired)s"
 msgstr "Detalle de recordatorio \"%(reminder)s\" %(expired)s "
 
-#: views.py:166
-msgid "expired reminders"
-msgstr "recordatorios vencidos"
+#: views.py:258
+#, python-format
+msgid "expired reminders to the date: %s"
+msgstr "recordatorios expirados a la fecha: %s"
 
-#: views.py:170
+#: views.py:262
 msgid "days expired"
-msgstr "días vencido"
+msgstr "días expirado"
+
+#: views.py:282
+msgid "Future expired reminders"
+msgstr "Recordatorios expirados en el futuro"
+
+#: views.py:312
+#, python-format
+msgid "User: %(user)s added as reminder %(role)s."
+msgstr "Usuario: %(user)s añadido as recordatorio como %(role)s."
+
+#: views.py:319
+#, python-format
+msgid "Add participant to the reminder \"%s\""
+msgstr "Añadir participante al recordatorio \"%s\""
+
+#: views.py:343
+#, python-format
+msgid "Participant %(participant)s removed from reminder."
+msgstr "Participante %(participant)s removido del recordatorio."
+
+#: views.py:355
+#, python-format
+msgid "Are you sure you wish to remove the participant \"%s\"?"
+msgstr "¿Está seguro que quiere remover el participante \"%s\"?"
 
 #: conf/settings.py:12
 msgid "Interval in seconds to wait before checking for expired reminders."
 msgstr ""
 "Intervalo en segundos a esperar antes de comprobar los recordatorios "
-"vencidos."
+"expirados."
+
+#~ msgid "Expiration date"
+#~ msgstr "Fecha de caducidad"
 
 #~ msgid "Reminder \"%s\" added successfully."
 #~ msgstr "Recordatorio \"%s\", creado exitosamente."
