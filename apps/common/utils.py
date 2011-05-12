@@ -10,6 +10,7 @@ from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.auth.models import User
+from django.utils.safestring import mark_safe
 
 
 def urlquote(link=None, get=None):
@@ -112,12 +113,13 @@ def exists_with_famfam(path):
 
 def two_state_template(state, famfam_ok_icon=u'tick', famfam_fail_icon=u'cross', states=2):
     if state:
-        return u'<span class="famfam active famfam-%s"></span>' % famfam_ok_icon
+        output = u'<span class="famfam active famfam-%s"></span>' % famfam_ok_icon
     elif states == 2:
-        return u'<span class="famfam active famfam-%s"></span>' % famfam_fail_icon
+        output = u'<span class="famfam active famfam-%s"></span>' % famfam_fail_icon
     else:
-		return u''
+        output = u''
 
+    return mark_safe(output)
 
 # The code here is based loosely on John Cardinal's notes found at:
 # http://www.johncardinal.com/tmgutil/capitalizenames.htm

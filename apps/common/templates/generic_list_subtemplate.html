@@ -66,7 +66,7 @@
                         {% endif %}
                         {% if not hide_columns %}
                             {% for column in object|get_model_list_columns %}
-                                <td>{{ object|object_property:column.attribute|safe }}</td>
+                                <td>{{ object|object_property:column.attribute }}</td>
                             {% endfor %}
                         {% endif %}
                             {% for column in extra_columns %}
