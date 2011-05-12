@@ -9,6 +9,7 @@ from django.core.urlresolvers import reverse
 from django.core.exceptions import PermissionDenied
 from django.utils import formats
 #from django.db.models import Q
+from django.contrib.auth.models import User
 
 from permissions.api import check_permissions
 
@@ -21,10 +22,7 @@ from reminders import PERMISSION_REMINDER_VIEW, PERMISSION_REMINDER_CREATE, \
     PERMISSION_REMINDER_EDIT, PERMISSION_REMINDER_DELETE, \
     PERMISSION_REMINDER_VIEW_ALL, PERMISSION_REMINDER_EDIT_ALL, \
     PERMISSION_REMINDER_DELETE_ALL
-
-
-def get_user_full_name(user):
-    return user.get_full_name() if user.get_full_name() else user
+from reminders.utils import get_user_full_name
 
 
 def reminder_list(request, object_list=None, title=None, view_all=False):
@@ -302,7 +300,7 @@ def participant_add(request, reminder_id):
     if request.method == 'POST':
         form = ParticipantForm_add(request.POST)
         if form.is_valid():
-            user = form.cleaned_data['user']
+            user = get_object_or_404(User, pk=form.cleaned_data['user'])
             role = form.cleaned_data['role']
             # TODO: Don't allow creator/editor to downgrade himself if thereare no other creators/editors
             #if user == request.user and reminder.participant_set.filter(user=request.user).role == PARTICIPANT_ROLE_CREATOR and

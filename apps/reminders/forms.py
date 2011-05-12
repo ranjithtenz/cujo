@@ -4,10 +4,19 @@ from django import forms
 from django.utils.translation import ugettext_lazy as _
 from django.forms.extras.widgets import SelectDateWidget
 from django.contrib.auth.models import User
+from django.utils import formats
 
 from common.forms import DetailForm
 
-from reminders.models import Reminder, Participant, PARTICIPANT_ROLE_CHOICES
+from reminders.models import Reminder, Participant, \
+    PARTICIPANT_ROLE_CHOICES, PARTICIPANT_ROLE_CREATOR, \
+    PARTICIPANT_ROLE_EDITOR, PARTICIPANT_ROLE_WATCHER
+from reminders.utils import get_user_full_name
+
+ALLOWED_PARTICIPANT_ROLE_CHOICES = (
+    (PARTICIPANT_ROLE_EDITOR, _(u'Editor')),
+    (PARTICIPANT_ROLE_WATCHER, _(u'Watcher')),
+)
 
 
 class ReminderForm(forms.ModelForm):
@@ -43,14 +52,15 @@ class ReminderForm_days(ReminderForm):
 class ReminderForm_view(DetailForm):
     class Meta:
         model = Reminder
-
+        
 
 class FutureDateForm(forms.Form):
     future_date = forms.DateField(initial=datetime.datetime.now(), widget=SelectDateWidget())
 
 
 class ParticipantForm_add(forms.Form):
-    # TODO: filter userusers and staff
-    user = forms.ModelChoiceField(queryset=User.objects.all(), label=_(u'User'))
-    # TODO: Exclude creator rolea
-    role = forms.ChoiceField(choices=PARTICIPANT_ROLE_CHOICES, label=_(u'Role'))
+    qs = User.objects.filter(is_staff=False).filter(is_superuser=False)
+    user_choices = [(user.pk, get_user_full_name(user)) for user in qs]
+    # Fields
+    user = forms.ChoiceField(choices=user_choices, label=_(u'User'))
+    role = forms.ChoiceField(choices=ALLOWED_PARTICIPANT_ROLE_CHOICES, label=_(u'Role'))
