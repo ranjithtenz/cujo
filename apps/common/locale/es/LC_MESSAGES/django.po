@@ -8,9 +8,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-05-06 13:19-0400\n"
-"PO-Revision-Date: 2011-05-06 13:22\n"
-"Last-Translator: Roberto Rosario <rosario_r@jp.pr.gov>\n"
+"POT-Creation-Date: 2011-05-12 14:36-0400\n"
+"PO-Revision-Date: 2011-05-12 14:36\n"
+"Last-Translator:   <admin@admin.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -22,6 +22,10 @@ msgstr ""
 #: forms.py:46
 msgid "None"
 msgstr "Ninguno"
+
+#: forms.py:135
+msgid "Selection"
+msgstr "Selección"
 
 #: literals.py:24
 msgid "A5"
@@ -63,11 +67,11 @@ msgstr "Retrato"
 msgid "Landscape"
 msgstr "Paisaje"
 
-#: utils.py:296
+#: utils.py:306
 msgid "function found"
 msgstr "función encontrada"
 
-#: utils.py:298 utils.py:300
+#: utils.py:308 utils.py:310
 #, python-format
 msgid "class found: %s"
 msgstr "clase encontrada: %s"
@@ -84,7 +88,7 @@ msgstr "Ninguna acción seleccionada."
 msgid "Must select at least one item."
 msgstr "Debe seleccionar al menos un artículo."
 
-#: conf/settings.py:9
+#: conf/settings.py:15
 msgid ""
 "Temporary directory used site wide to store thumbnails, previews and "
 "temporary files.  If none is specified, one will be created using "
