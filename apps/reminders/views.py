@@ -8,6 +8,7 @@ from django.contrib import messages
 from django.core.urlresolvers import reverse
 from django.core.exceptions import PermissionDenied
 from django.utils import formats
+#from django.db.models import Q
 
 from permissions.api import check_permissions
 
@@ -27,13 +28,10 @@ def get_user_full_name(user):
 
 
 def reminder_list(request, object_list=None, title=None, view_all=False):
-    try:
+    if view_all:
         check_permissions(request.user, 'reminders', [PERMISSION_REMINDER_VIEW_ALL])
-        if view_all:
-            query_set = Reminder.objects.all()
-        else:
-            query_set = Reminder.objects.filter(participant__user=request.user)
-    except PermissionDenied:
+        query_set = Reminder.objects.all()
+    else:
         check_permissions(request.user, 'reminders', [PERMISSION_REMINDER_VIEW])
         query_set = Reminder.objects.filter(participant__user=request.user)
 
@@ -145,7 +143,7 @@ def reminder_delete(request, reminder_id=None, reminder_id_list=None):
         except PermissionDenied:
             check_permissions(request.user, u'reminders', [PERMISSION_REMINDER_DELETE])
             try:
-                reminders = [get_object_or_404(Reminder.objects.filter(participant__user=request.user).filter(participant__role__in=[PARTICIPANT_ROLE_CREATOR, PARTICIPANT_ROLE_EDITOR]), pk=reminder_id)]
+                reminders = [get_object_or_404(Reminder.objects.filter(participant__user=request.user).filter(participant__role__in=[PARTICIPANT_ROLE_CREATOR, PARTICIPANT_ROLE_EDITOR]).distinct(), pk=reminder_id)]
             except Http404:
                 raise PermissionDenied
 
@@ -157,8 +155,7 @@ def reminder_delete(request, reminder_id=None, reminder_id_list=None):
             reminders = [get_object_or_404(Reminder, pk=reminder_id) for reminder_id in reminder_id_list.split(',')]
         except PermissionDenied:
             check_permissions(request.user, 'reminders', [PERMISSION_REMINDER_DELETE])
-            reminders = [get_object_or_404(Reminder.objects.filter(participant__user=request.user), pk=reminder_id) for reminder_id in reminder_id_list.split(',')]
-
+            reminders = [get_object_or_404(Reminder.objects.filter(participant__user=request.user).filter(participant__role__in=[PARTICIPANT_ROLE_CREATOR, PARTICIPANT_ROLE_EDITOR]).distinct(), pk=reminder_id) for reminder_id in reminder_id_list.split(u',')]
     else:
         messages.error(request, _(u'Must provide at least one reminder.'))
         return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
@@ -206,7 +203,7 @@ def reminder_view(request, reminder_id):
     except PermissionDenied:
         check_permissions(request.user, u'reminders', [PERMISSION_REMINDER_VIEW])
         try:
-            reminder = get_object_or_404(Reminder.objects.filter(participant__user=request.user).filter(participant__role__in=[PARTICIPANT_ROLE_CREATOR, PARTICIPANT_ROLE_EDITOR, PARTICIPANT_ROLE_WATCHER]), pk=reminder_id)
+            reminder = get_object_or_404(Reminder.objects.filter(participant__user=request.user).filter(participant__role__in=[PARTICIPANT_ROLE_CREATOR, PARTICIPANT_ROLE_EDITOR, PARTICIPANT_ROLE_WATCHER]).distinct(), pk=reminder_id)
         except Http404:
             raise PermissionDenied
 
@@ -246,14 +243,10 @@ def reminder_view(request, reminder_id):
 
 
 def expired_remider_list(request, expiration_date=datetime.datetime.now().date(), view_all=False):
-    try:
+    if view_all:
         check_permissions(request.user, 'reminders', [PERMISSION_REMINDER_VIEW_ALL])
-        if view_all:
-            expired_reminders = Reminder.objects.filter(datetime_expire__lt=expiration_date)
-        else:
-            expired_reminders = Reminder.objects.filter(participant__user=request.user).filter(datetime_expire__lt=expiration_date)
-                    
-    except PermissionDenied:
+        expired_reminders = Reminder.objects.filter(datetime_expire__lt=expiration_date)
+    else:
         check_permissions(request.user, 'reminders', [PERMISSION_REMINDER_VIEW])
         expired_reminders = Reminder.objects.filter(participant__user=request.user).filter(datetime_expire__lt=expiration_date)
 
@@ -302,7 +295,7 @@ def participant_add(request, reminder_id):
     except PermissionDenied:
         check_permissions(request.user, u'reminders', [PERMISSION_REMINDER_EDIT])
         try:
-            reminder = get_object_or_404(Reminder.objects.filter(participant__user=request.user).filter(participant__role__in=[PARTICIPANT_ROLE_CREATOR, PARTICIPANT_ROLE_EDITOR]), pk=reminder_id)
+            reminder = get_object_or_404(Reminder.objects.filter(participant__user=request.user).filter(participant__role__in=[PARTICIPANT_ROLE_CREATOR, PARTICIPANT_ROLE_EDITOR]).distinct(), pk=reminder_id)
         except Http404:
             raise PermissionDenied
 
@@ -341,7 +334,7 @@ def participant_remove(request, participant_id):
     except PermissionDenied:
         check_permissions(request.user, u'reminders', [PERMISSION_REMINDER_EDIT])
         try:
-            reminder = get_object_or_404(Reminder.objects.filter(participant__user=request.user).filter(participant__role__in=[PARTICIPANT_ROLE_CREATOR, PARTICIPANT_ROLE_EDITOR]), pk=reminder_id)
+            reminder = get_object_or_404(Reminder.objects.filter(participant__user=request.user).filter(participant__role__in=[PARTICIPANT_ROLE_CREATOR, PARTICIPANT_ROLE_EDITOR]).distinct(), pk=reminder_id)
         except Http404:
             raise PermissionDenied
 
