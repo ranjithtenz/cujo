@@ -2,6 +2,7 @@ from django.contrib import admin
 
 from reminders.models import Reminder, Participant
 
+
 class ParticipantInline(admin.StackedInline):
     model = Participant
     extra = 1

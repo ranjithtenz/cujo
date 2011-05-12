@@ -1,7 +1,6 @@
 from django.conf.urls.defaults import patterns, url
 
 from reminders.forms import ReminderForm_days
- 
 
 urlpatterns = patterns('reminders.views',
     url(r'^list/$', 'reminder_list', (), 'reminder_list'),
@@ -17,4 +16,3 @@ urlpatterns = patterns('reminders.views',
     url(r'^(?P<reminder_id>\d+)/add/participant/$', 'participant_add', (), 'participant_add'),
     url(r'^participant/(?P<participant_id>\d+)/remove/$', 'participant_remove', (), 'participant_remove'),
 )
-

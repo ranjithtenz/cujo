@@ -56,7 +56,7 @@ def user_edit(request, user_id):
     if user.is_superuser or user.is_staff:
         messages.error(request, _(u'Super user and staff user editing is not allowed, use the admin interface for these cases.'))
         return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
-        
+
     if request.method == 'POST':
         form = UserForm(instance=user, data=request.POST)
         if form.is_valid():
@@ -145,8 +145,8 @@ def user_multiple_delete(request):
     return user_delete(
         request, user_id_list=request.GET.get('id_list', [])
     )
-    
-    
+
+
 def user_set_password(request, user_id=None, user_id_list=None):
     check_permissions(request.user, 'user_management', [PERMISSION_USER_EDIT])
     post_action_redirect = None
@@ -181,7 +181,7 @@ def user_set_password(request, user_id=None, user_id_list=None):
                     except Exception, e:
                         messages.error(request, _(u'Error reseting password for user "%(user)s": %(error)s') % {
                             'user': user, 'error': e
-                        })                
+                        })
 
                 return HttpResponseRedirect(next)
     else:
@@ -198,7 +198,7 @@ def user_set_password(request, user_id=None, user_id_list=None):
         context['title'] = _(u'Reseting password for user: %s') % ', '.join([unicode(d) for d in users])
     elif len(users) > 1:
         context['title'] = _(u'Reseting password for users: %s') % ', '.join([unicode(d) for d in users])
-        
+
     return render_to_response('generic_form.html', context,
         context_instance=RequestContext(request))
 
@@ -207,7 +207,7 @@ def user_multiple_set_password(request):
     return user_set_password(
         request, user_id_list=request.GET.get('id_list', [])
     )
-    
+
 
 def group_list(request):
     check_permissions(request.user, 'user_management', [PERMISSION_GROUP_VIEW])
@@ -319,7 +319,7 @@ def group_multiple_delete(request):
     return group_delete(
         request, group_id_list=request.GET.get('id_list', [])
     )
-    
+
 
 def get_group_members(group):
     return group.user_set.all()
@@ -359,7 +359,7 @@ def group_members(request, group_id):
                         group.user_set.remove(obj)
                         messages.success(request, _(u'%(obj)s removed successfully from the group: %(group)s.') % {
                             'obj': generate_choices_w_labels([obj])[0][1], 'group': group})
-                    except member.DoesNotExist:
+                    except group.DoesNotExist:
                         messages.error(request, _(u'Unable to remove %(obj)s from the group: %(group)s.') % {
                             'obj': generate_choices_w_labels([obj])[0][1], 'group': group})
     unselected_users_form = ChoiceForm(prefix='unselected-users',

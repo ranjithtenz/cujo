@@ -11,33 +11,33 @@ from reminders.models import Reminder, Participant, PARTICIPANT_ROLE_CHOICES
 
 
 class ReminderForm(forms.ModelForm):
-	class Meta:
-		model = Reminder
-		
-	def __init__(self, *args, **kwargs):
-		super(ReminderForm, self).__init__(*args, **kwargs)
-		self.fields['notes'].widget.attrs.update({'rows': 4})
-		self.fields['datetime_expire'].initial = self.fields['datetime_created'].initial.date()
-		self.fields['datetime_expire'].widget = SelectDateWidget()
-		self.fields['datetime_created'].widget = SelectDateWidget()
+    class Meta:
+        model = Reminder
+        
+    def __init__(self, *args, **kwargs):
+        super(ReminderForm, self).__init__(*args, **kwargs)
+        self.fields['notes'].widget.attrs.update({'rows': 4})
+        self.fields['datetime_expire'].initial = self.fields['datetime_created'].initial.date()
+        self.fields['datetime_expire'].widget = SelectDateWidget()
+        self.fields['datetime_created'].widget = SelectDateWidget()
 
-	
+    
 class ReminderForm_days(ReminderForm):
-	class Meta:
-		model = Reminder
-		
-	def __init__(self, *args, **kwargs):
-		super(ReminderForm_days, self).__init__(*args, **kwargs)
-		self.fields['datetime_expire'].required = False
-		self.fields['datetime_expire'].widget = forms.widgets.HiddenInput()
-		self.fields['datetime_expire'].initial = self.fields['datetime_created'].initial.date()
+    class Meta:
+        model = Reminder
+        
+    def __init__(self, *args, **kwargs):
+        super(ReminderForm_days, self).__init__(*args, **kwargs)
+        self.fields['datetime_expire'].required = False
+        self.fields['datetime_expire'].widget = forms.widgets.HiddenInput()
+        self.fields['datetime_expire'].initial = self.fields['datetime_created'].initial.date()
 
-		if self.instance.datetime_created and self.instance.datetime_expire:
-			self.fields['days'].initial = (self.instance.datetime_expire - self.instance.datetime_created).days
+        if self.instance.datetime_created and self.instance.datetime_expire:
+            self.fields['days'].initial = (self.instance.datetime_expire - self.instance.datetime_created).days
 
-	days = forms.CharField(label=_(u'Expiration days'), widget=forms.widgets.TextInput(attrs={'maxlength': '4', 'class': 'short_textbox'}))
-	#HACK
-	datetime_expire = forms.CharField(required=False)
+    days = forms.CharField(label=_(u'Expiration days'), widget=forms.widgets.TextInput(attrs={'maxlength': '4', 'class': 'short_textbox'}))
+    #HACK
+    datetime_expire = forms.CharField(required=False)
 
 
 class ReminderForm_view(DetailForm):
@@ -46,11 +46,11 @@ class ReminderForm_view(DetailForm):
 
 
 class FutureDateForm(forms.Form):
-	future_date = forms.DateField(initial=datetime.datetime.now(), widget=SelectDateWidget())
+    future_date = forms.DateField(initial=datetime.datetime.now(), widget=SelectDateWidget())
 
 
 class ParticipantForm_add(forms.Form):
-	# TODO: filter userusers and staff
-	user = forms.ModelChoiceField(queryset=User.objects.all(), label=_(u'User'))
-	# TODO: Exclude creator role
-	role = forms.ChoiceField(choices=PARTICIPANT_ROLE_CHOICES, label=_(u'Role'))
+    # TODO: filter userusers and staff
+    user = forms.ModelChoiceField(queryset=User.objects.all(), label=_(u'User'))
+    # TODO: Exclude creator rolea
+    role = forms.ChoiceField(choices=PARTICIPANT_ROLE_CHOICES, label=_(u'Role'))

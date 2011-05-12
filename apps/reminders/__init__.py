@@ -1,12 +1,9 @@
 import datetime
 
 from django.utils.translation import ugettext_lazy as _
-from django.core.urlresolvers import reverse
-from django.conf import settings
 
 from navigation.api import register_links, register_menu, \
     register_model_list_columns, register_multi_item_links
-from main.api import register_diagnostic, register_tool
 from permissions.api import register_permissions
 from common.utils import two_state_template
 
@@ -45,41 +42,42 @@ reminder_participant_add = {'text': _(u'add participant'), 'view': 'participant_
 reminder_participant_remove = {'text': _(u'remove'), 'view': 'participant_remove', 'args': 'object.pk', 'famfam': 'user_delete', 'permissions': {'namespace': 'reminders', 'permissions': [PERMISSION_REMINDER_EDIT]}}
 
 register_links(['participant_remove', 'reminder_participant_add', 'future_expired_remider_list', 'reminder_view', 'reminder_edit', 'reminder_edit_days', 'reminder_delete', 'reminder_list', 'expired_remider_list', 'reminder_add', 'reminder_add_days'], [reminder_list, expired_remider_list, future_expired_remider_list, reminder_add, reminder_add_days], menu_name='sidebar')
-register_links([Reminder], [reminder_edit, reminder_edit_days, reminder_participant_add, reminder_delete])
+register_links([Reminder], [reminder_edit, reminder_edit_days, reminder_delete])
+register_links([Reminder], [reminder_participant_add], menu_name='sidebar')
 register_links([Participant], [reminder_participant_remove])
 register_multi_item_links(['reminder_list'], [reminder_multiple_delete])
 
 register_menu([
-	{'text': _(u'reminders'), 'view': 'reminder_list', 'links': [
-		reminder_list, expired_remider_list, future_expired_remider_list
-	], 'famfam': 'hourglass', 'position': 1}])
+    {'text': _(u'reminders'), 'view': 'reminder_list', 'links': [
+        reminder_list, expired_remider_list, future_expired_remider_list
+    ], 'famfam': 'hourglass', 'position': 1}])
 
 register_model_list_columns(Reminder, [
-		{
-			'name': _(u'creation date'),
-			'attribute': lambda x: x.datetime_created
-		},
-		{
-			'name': _(u'expiration date'),
-			'attribute': lambda x: x.datetime_expire
-		},
-		{
-			'name': _('days'),
-			'attribute': lambda x: (x.datetime_expire - x.datetime_created).days
-		},
-		{
-			'name': _('expired?'),
-			'attribute': lambda x: two_state_template((x.datetime_expire < datetime.datetime.now().date()), states=1)
-		}	
+        {
+            'name': _(u'creation date'),
+            'attribute': lambda x: x.datetime_created
+        },
+        {
+            'name': _(u'expiration date'),
+            'attribute': lambda x: x.datetime_expire
+        },
+        {
+            'name': _('days'),
+            'attribute': lambda x: (x.datetime_expire - x.datetime_created).days
+        },
+        {
+            'name': _('expired?'),
+            'attribute': lambda x: two_state_template((x.datetime_expire < datetime.datetime.now().date()), states=1)
+        }	
     ])
 
 register_model_list_columns(Participant, [
-	{
-		'name': _(u'name'),
-		'attribute': lambda x: x.user.get_full_name() if x.user.get_full_name() else x.user
-	},
-	{
-		'name': _(u'role'),
-		'attribute': lambda x: x.get_role_display()
-	}	
-])
+    {
+        'name': _(u'name'),
+        'attribute': lambda x: x.user.get_full_name() if x.user.get_full_name() else x.user
+    },
+    {
+        'name': _(u'role'),
+        'attribute': lambda x: x.get_role_display()
+    }	
+    ])
