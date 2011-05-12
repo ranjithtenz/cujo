@@ -58,4 +58,39 @@ class Participant(models.Model):
         return unicode(self.user.get_full_name() if self.user.get_full_name() else self.user)
 
 
+PREEMPTIVE_CHOICES = (
+    (u'48h', _(u'2 days')),
+    (u'24h', _(u'1 day')),
+    (u'12h', _(u'12 hours')),
+    (u'6h', _(u'6 hours')),
+    (u'2h', _(u'2 hours')),
+    (u'1h', _(u'1 hour')),
+    (u'30m', _(u'30 minutes')),
+    (u'15m', _(u'15 minutes')),
+)
+
+REPETITION_CHOICES = (
+    (u'24h', _(u'1 day')),
+    (u'12h', _(u'12 hours')),
+    (u'6h', _(u'6 hours')),
+    (u'2h', _(u'2 hours')),
+    (u'1h', _(u'1 hour')),
+    (u'30m', _(u'30 minutes')),
+    (u'15m', _(u'15 minutes')),
+)
+
+
+class Notification(models.Model):
+    reminder = models.ForeignKey(Reminder, verbose_name=_(u'reminder'))
+    participant = models.ForeignKey(Participant, verbose_name=_(u'participant'))
+    preemptive = models.CharField(max_length=4, choices=PREEMPTIVE_CHOICES, verbose_name=_(u'preemptive'))
+    
+    class Meta:
+        verbose_name = _(u'notification')
+        verbose_name_plural = _(u'notifications')
+
+    def __unicode__(self):
+        return self.label
+        
+
 register(Reminder, _(u'reminder'), [u'label', 'notes', 'participant__user__username', 'participant__user__first_name', 'participant__user__last_name'])
