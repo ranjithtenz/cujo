@@ -24,6 +24,7 @@ class Reminder(models.Model):
     datetime_expire = models.DateField(verbose_name=_(u'expiration date'))
 
     class Meta:
+        ordering = ('-datetime_created',)
         verbose_name = _(u'reminder')
         verbose_name_plural = _(u'reminders')
 
