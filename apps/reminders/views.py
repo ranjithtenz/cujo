@@ -7,6 +7,7 @@ from django.template import RequestContext
 from django.contrib import messages
 from django.core.urlresolvers import reverse
 from django.core.exceptions import PermissionDenied
+from django.utils import formats
 
 from permissions.api import check_permissions
 
@@ -25,18 +26,22 @@ def get_user_full_name(user):
     return user.get_full_name() if user.get_full_name() else user
 
 
-def reminder_list(request, object_list=None, title=None):
+def reminder_list(request, object_list=None, title=None, view_all=False):
     try:
         check_permissions(request.user, 'reminders', [PERMISSION_REMINDER_VIEW_ALL])
-        query_set = Reminder.objects.all()
+        if view_all:
+            query_set = Reminder.objects.all()
+        else:
+            query_set = Reminder.objects.filter(participant__user=request.user)
     except PermissionDenied:
         check_permissions(request.user, 'reminders', [PERMISSION_REMINDER_VIEW])
         query_set = Reminder.objects.filter(participant__user=request.user)
 
     return render_to_response('generic_list.html', {
         'object_list': object_list if not (object_list is None) else query_set,
-        'title': title if title else _(u'reminders'),
+        'title': title if title else _(u'reminders %s') % (_(u'(all)') if view_all else u''),
         'multi_select_as_buttons': True,
+        'hide_links': True,
 
     }, context_instance=RequestContext(request))
 
@@ -63,7 +68,7 @@ def reminder_add(request, form_class=ReminderForm):
         form = form_class()
 
     return render_to_response('generic_form.html', {
-        'title': _(u'Create reminder (%s)') % (u'calendar' if form_class == ReminderForm else u'days'),
+        'title': _(u'create reminder (%s)') % (_(u'calendar') if form_class == ReminderForm else _(u'days')),
         'form': form,
         'next': next,
     },
@@ -240,18 +245,26 @@ def reminder_view(request, reminder_id):
     context_instance=RequestContext(request))
 
 
-def expired_remider_list(request, expiration_date=datetime.datetime.now().date()):
+def expired_remider_list(request, expiration_date=datetime.datetime.now().date(), view_all=False):
     try:
         check_permissions(request.user, 'reminders', [PERMISSION_REMINDER_VIEW_ALL])
-        expired_reminders = Reminder.objects.filter(datetime_expire__lt=expiration_date)
+        if view_all:
+            expired_reminders = Reminder.objects.filter(datetime_expire__lt=expiration_date)
+        else:
+            expired_reminders = Reminder.objects.filter(participant__user=request.user).filter(datetime_expire__lt=expiration_date)
+                    
     except PermissionDenied:
         check_permissions(request.user, 'reminders', [PERMISSION_REMINDER_VIEW])
         expired_reminders = Reminder.objects.filter(participant__user=request.user).filter(datetime_expire__lt=expiration_date)
 
     return render_to_response('generic_list.html', {
         'object_list': expired_reminders.order_by('datetime_expire'),
-        'title': _(u'expired reminders to the date: %s') % expiration_date,
+        'title': _(u'expired reminders to the date: %(date)s %(all)s') % {
+            'date': formats.date_format(expiration_date, u'DATE_FORMAT'),
+            'all': _(u'(all)') if view_all else u''
+            },
         'multi_select_as_buttons': True,
+        'hide_links': True,
         'extra_columns': [
             {
                 'name': _('days expired'),
@@ -261,7 +274,7 @@ def expired_remider_list(request, expiration_date=datetime.datetime.now().date()
     }, context_instance=RequestContext(request))
 
 
-def future_expired_remider_list(request):
+def future_expired_remider_list(request, view_all=False):
     check_permissions(request.user, u'reminders', [PERMISSION_REMINDER_VIEW, PERMISSION_REMINDER_VIEW_ALL])
 
     #next = request.POST.get('next', request.GET.get('next', request.META.get('HTTP_REFERER', u'/')))
@@ -269,7 +282,7 @@ def future_expired_remider_list(request):
     if request.method == 'POST':
         form = FutureDateForm(request.POST)
         if form.is_valid():
-            return expired_remider_list(request, expiration_date=form.cleaned_data['future_date'])
+            return expired_remider_list(request, expiration_date=form.cleaned_data['future_date'], view_all=view_all)
     else:
         form = FutureDateForm()
         
@@ -313,6 +326,7 @@ def participant_add(request, reminder_id):
     return render_to_response('generic_form.html', {
         'title': _(u'Add participant to the reminder "%s"') % reminder,
         'form': form,
+        'object': reminder,
         #'next': next,
     },
     context_instance=RequestContext(request))	
