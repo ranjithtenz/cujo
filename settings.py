@@ -95,7 +95,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'common.middleware.login_required_middleware.LoginRequiredMiddleware',
-	'permissions.middleware.permission_denied_middleware.PermissionDeniedMiddleware',
+    'permissions.middleware.permission_denied_middleware.PermissionDeniedMiddleware',
     'pagination.middleware.PaginationMiddleware',
 )
 
@@ -114,7 +114,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.sites',
     'django.contrib.messages',
-	'django.contrib.admin',
+    'django.contrib.admin',
     'smart_settings',
     'navigation',
     'web_theme',
@@ -151,7 +151,10 @@ WEB_THEME_THEME = 'djime-cerulean'
 # Change to xsendfile for apache if x-sendfile is enabled
 SENDFILE_BACKEND = 'sendfile.backends.simple'
 #----------- django-celery --------------
-import djcelery
+try:
+    import djcelery
+except ImportError:
+    print 'djcelery not found'
 djcelery.setup_loader()
 BROKER_HOST = "localhost"
 BROKER_PORT = 5672
