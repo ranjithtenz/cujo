@@ -1,0 +1,5 @@
+Django==1.2.4
+celery==2.2.6
+django-celery==2.2.4
+django-pagination==1.0.7
+django-sentry==1.7.5

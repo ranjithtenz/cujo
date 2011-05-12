@@ -1,0 +1,8 @@
+Django==1.2.4
+Werkzeug==0.6.2
+celery==2.2.6
+django-celery==2.2.4
+django-extensions==0.6
+django-pagination==1.0.7
+django-rosetta==0.6.0
+django-sentry==1.7.5
