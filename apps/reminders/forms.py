@@ -59,7 +59,7 @@ class FutureDateForm(forms.Form):
 
 
 class ParticipantForm_add(forms.Form):
-    qs = User.objects.filter(is_staff=False).filter(is_superuser=False)
+    qs = User.objects.filter(is_staff=False).filter(is_superuser=False).order_by('first_name', 'last_name', 'username')
     user_choices = [(user.pk, get_user_full_name(user)) for user in qs]
     # Fields
     user = forms.ChoiceField(choices=user_choices, label=_(u'User'))
