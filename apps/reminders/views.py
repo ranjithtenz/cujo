@@ -54,10 +54,11 @@ def reminder_add(request, form_class=ReminderForm):
                 reminder = form.save(commit=False)
                 reminder.datetime_expire = reminder.datetime_created + datetime.timedelta(days=int(form.cleaned_data['days']))
                 reminder.save()
-                participant = Participant(reminder=reminder, user=request.user, role=PARTICIPANT_ROLE_CREATOR)
-                participant.save()
             else:
                 reminder = form.save()
+
+            participant = Participant(reminder=reminder, user=request.user, role=PARTICIPANT_ROLE_CREATOR)
+            participant.save()
             messages.success(request, _(u'Reminder "%s" created successfully.') % reminder)
             return HttpResponseRedirect(reverse('reminder_list'))
     else:
