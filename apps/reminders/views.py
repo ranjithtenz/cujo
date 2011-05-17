@@ -338,6 +338,10 @@ def participant_remove(request, participant_id):
             raise PermissionDenied
 
     previous = request.POST.get('previous', request.GET.get('previous', request.META.get('HTTP_REFERER', u'/')))
+    
+    if participant.role == PARTICIPANT_ROLE_CREATOR:
+        messages.error(request, _(u'Cannot remove reminder creator.'))
+        return HttpResponseRedirect(previous)
 
     if request.method == 'POST':
         participant.delete()
