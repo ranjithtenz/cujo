@@ -216,7 +216,7 @@ def reminder_view(request, reminder_id):
         {'label': _(u'Days'), 'field': lambda x: (x.datetime_expire - x.datetime_created).days},
     ])
 
-    subtemplates_list=[
+    subtemplates_list = [
         {
             'name': 'generic_detail_subtemplate.html',
             'context': {
@@ -238,7 +238,7 @@ def reminder_view(request, reminder_id):
 
     if Comment.objects.for_model(reminder).count():
         subtemplates_list.append(get_comments_subtemplate(reminder))
-        
+
     return render_to_response('generic_detail.html', {
         'subtemplates_list': subtemplates_list,
         'object': reminder,
@@ -283,7 +283,7 @@ def future_expired_remider_list(request, view_all=False):
             return expired_remider_list(request, expiration_date=form.cleaned_data['future_date'], view_all=view_all)
     else:
         form = FutureDateForm()
-        
+
     return render_to_response('generic_form.html', {
         'title': _(u'Future expired reminders'),
         'form': form,
@@ -293,7 +293,7 @@ def future_expired_remider_list(request, view_all=False):
 
 
 def participant_add(request, reminder_id):
-    
+
     try:
         check_permissions(request.user, [PERMISSION_REMINDER_EDIT_ALL])
         reminder = get_object_or_404(Reminder, pk=reminder_id)
@@ -327,7 +327,7 @@ def participant_add(request, reminder_id):
         'object': reminder,
         #'next': next,
     },
-    context_instance=RequestContext(request))	
+    context_instance=RequestContext(request))
 
 
 def participant_remove(request, participant_id):
@@ -344,7 +344,7 @@ def participant_remove(request, participant_id):
             raise PermissionDenied
 
     previous = request.POST.get('previous', request.GET.get('previous', request.META.get('HTTP_REFERER', u'/')))
-    
+
     if participant.role == PARTICIPANT_ROLE_CREATOR:
         messages.error(request, _(u'Cannot remove reminder creator.'))
         return HttpResponseRedirect(previous)
@@ -361,7 +361,7 @@ def participant_remove(request, participant_id):
         'delete_view': True,
         'previous': previous,
         #'next': next,
-        'form_icon': u'user_delete.png',       
+        'form_icon': u'user_delete.png',
     }
     context['object'] = participant
     context['title'] = _(u'Are you sure you wish to remove the participant "%s"?') % participant

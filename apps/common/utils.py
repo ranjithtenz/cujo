@@ -121,6 +121,7 @@ def two_state_template(state, famfam_ok_icon=u'tick', famfam_fail_icon=u'cross',
 
     return mark_safe(output)
 
+
 # The code here is based loosely on John Cardinal's notes found at:
 # http://www.johncardinal.com/tmgutil/capitalizenames.htm
 
@@ -321,7 +322,7 @@ def parse_range(astr):
         x = part.split(u'-')
         result.update(range(int(x[0]), int(x[-1]) + 1))
     return sorted(result)
-    
+
 
 def generate_choices_w_labels(choices, display_object_type=True):
     results = []

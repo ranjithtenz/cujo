@@ -10,7 +10,7 @@ from django.conf import settings
 from reminders.models import Reminder
 
 if 'django.contrib.comments' not in settings.INSTALLED_APPS:
-	raise Exception('This app depends on the django.contrib.comments app.')
+    raise Exception('This app depends on the django.contrib.comments app.')
 
 PERMISSION_COMMENT_CREATE = {'namespace': 'comments', 'name': 'comment_create', 'label': _(u'Create new comments')}
 PERMISSION_COMMENT_DELETE = {'namespace': 'comments', 'name': 'comment_delete', 'label': _(u'Delete comments')}

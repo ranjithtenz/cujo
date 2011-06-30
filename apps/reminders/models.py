@@ -84,13 +84,13 @@ class Notification(models.Model):
     reminder = models.ForeignKey(Reminder, verbose_name=_(u'reminder'))
     participant = models.ForeignKey(Participant, verbose_name=_(u'participant'))
     preemptive = models.CharField(max_length=4, choices=PREEMPTIVE_CHOICES, verbose_name=_(u'preemptive'))
-    
+
     class Meta:
         verbose_name = _(u'notification')
         verbose_name_plural = _(u'notifications')
 
     def __unicode__(self):
         return self.label
-        
+
 
 register(Reminder, _(u'reminder'), [u'label', 'notes', 'participant__user__username', 'participant__user__first_name', 'participant__user__last_name'])

@@ -123,7 +123,7 @@ class FilterForm(forms.Form):
             self.fields[list_filter['name']] = forms.ModelChoiceField(
                 queryset=list_filter['queryset'],
                 label=label[0].upper() + label[1:], required=False)
-                
+
 
 class ChoiceForm(forms.Form):
     """

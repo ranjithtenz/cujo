@@ -55,7 +55,7 @@ register_links(
         'reminder_add_days', 'participant_add'],
     [
         reminder_list, reminder_list_all, expired_remider_list,
-        expired_remider_list_all, future_expired_remider_list, 
+        expired_remider_list_all, future_expired_remider_list,
         future_expired_remider_list_all, reminder_add, reminder_add_days
     ], menu_name='sidebar'
 )
@@ -77,10 +77,13 @@ register_multi_item_links(
     ]
 )
 
-register_menu([
-    {'text': _(u'reminders'), 'view': 'reminder_list', 'links': [
-       # reminder_list, expired_remider_list, future_expired_remider_list
-    ], 'famfam': 'hourglass', 'position': 1}])
+register_menu(
+    [
+        {'text': _(u'reminders'), 'view': 'reminder_list', 'links': [
+           # reminder_list, expired_remider_list, future_expired_remider_list
+        ], 'famfam': 'hourglass', 'position': 1}
+    ]
+)
 
 register_model_list_columns(Reminder, [
         {
@@ -98,16 +101,18 @@ register_model_list_columns(Reminder, [
         {
             'name': _('expired?'),
             'attribute': lambda x: two_state_template((x.datetime_expire < datetime.datetime.now().date()), states=1)
-        }	
-    ])
+        }
+    ]
+)
 
 register_model_list_columns(Participant, [
-    {
-        'name': _(u'name'),
-        'attribute': lambda x: x.user.get_full_name() if x.user.get_full_name() else x.user
-    },
-    {
-        'name': _(u'role'),
-        'attribute': lambda x: x.get_role_display()
-    }	
-    ])
+        {
+            'name': _(u'name'),
+            'attribute': lambda x: x.user.get_full_name() if x.user.get_full_name() else x.user
+        },
+        {
+            'name': _(u'role'),
+            'attribute': lambda x: x.get_role_display()
+        }
+    ]
+)

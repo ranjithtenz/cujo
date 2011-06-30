@@ -3,6 +3,7 @@
 from django.utils.translation import ugettext_lazy as _
 from smart_settings.api import register_setting
 
+
 register_setting(
     namespace=u'main',
     module=u'main.conf.settings',
