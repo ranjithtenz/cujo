@@ -115,6 +115,7 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.admin',
+    'django.contrib.comments',
     'smart_settings',
     'navigation',
     'web_theme',
@@ -131,6 +132,7 @@ INSTALLED_APPS = (
     'sentry.client.celery',
     'reminders',
     'user_management',
+    'reminder_comments',
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (

@@ -10,8 +10,10 @@ from django.core.exceptions import PermissionDenied
 from django.utils import formats
 #from django.db.models import Q
 from django.contrib.auth.models import User
+from django.contrib.comments.models import Comment
 
 from permissions.api import check_permissions
+from reminder_comments.utils import get_comments_subtemplate
 
 from reminders.forms import ReminderForm, ReminderForm_view, \
     ReminderForm_days, FutureDateForm, ParticipantForm_add
@@ -233,6 +235,9 @@ def reminder_view(request, reminder_id):
         },
     ]
 
+    if Comment.objects.for_model(reminder).count():
+        subtemplates_list.append(get_comments_subtemplate(reminder))
+        
     return render_to_response('generic_detail.html', {
         'subtemplates_list': subtemplates_list,
         'object': reminder,

@@ -85,10 +85,11 @@ class DetailForm(forms.ModelForm):
                     attrs=field.widget.attrs,
                     queryset=getattr(field, 'queryset', None),
                 )
-                self.fields[field_name].help_text = ''
+                self.fields[field_name].help_text = u''
 
         for field_name, field in self.fields.items():
-            self.fields[field_name].widget.attrs.update({'readonly': 'readonly'})
+            self.fields[field_name].widget.attrs.update({'readonly': u'readonly'})
+            self.fields[field_name].localize = True
 
 
 class GenericConfirmForm(forms.Form):
