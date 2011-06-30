@@ -4,48 +4,48 @@ from django.utils.translation import ugettext_lazy as _
 
 from navigation.api import register_links, register_menu, \
     register_model_list_columns, register_multi_item_links
-from permissions.api import register_permissions
+from permissions.api import register_permission, set_namespace_title
 from common.utils import two_state_template
 
 from reminders.models import Reminder, Participant
 
-PERMISSION_REMINDER_VIEW = 'reminder_view'
-PERMISSION_REMINDER_VIEW_ALL = 'reminder_view_all'
-PERMISSION_REMINDER_CREATE = 'reminder_create'
-PERMISSION_REMINDER_EDIT = 'reminder_edit'
-PERMISSION_REMINDER_EDIT_ALL = 'reminder_edit_all'
-PERMISSION_REMINDER_DELETE = 'reminder_delete'
-PERMISSION_REMINDER_DELETE_ALL = 'reminder_delete_all'
+PERMISSION_REMINDER_VIEW = {'namespace': 'reminders', 'name': 'reminder_view', 'label': _(u'View reminder')}
+PERMISSION_REMINDER_VIEW_ALL = {'namespace': 'reminders', 'name': 'reminder_view_all', 'label': _(u'View all reminders')}
+PERMISSION_REMINDER_CREATE = {'namespace': 'reminders', 'name': 'reminder_create', 'label': _(u'Create reminder')}
+PERMISSION_REMINDER_EDIT = {'namespace': 'reminders', 'name': 'reminder_edit', 'label': _(u'Edit reminder')}
+PERMISSION_REMINDER_EDIT_ALL = {'namespace': 'reminders', 'name': 'reminder_edit_all', 'label': _(u'Edit all reminders')}
+PERMISSION_REMINDER_DELETE = {'namespace': 'reminders', 'name': 'reminder_delete', 'label': _(u'Delete reminder')}
+PERMISSION_REMINDER_DELETE_ALL = {'namespace': 'reminders', 'name': 'reminder_delete_all', 'label': _(u'Delete all reminders')}
 
-register_permissions('reminders', [
-    {'name': PERMISSION_REMINDER_VIEW, 'label': _(u'View reminder')},
-    {'name': PERMISSION_REMINDER_VIEW_ALL, 'label': _(u'View all reminders')},
-    {'name': PERMISSION_REMINDER_CREATE, 'label': _(u'Create reminder')},
-    {'name': PERMISSION_REMINDER_EDIT, 'label': _(u'Edit reminder')},
-    {'name': PERMISSION_REMINDER_EDIT_ALL, 'label': _(u'Edit all reminders')},
-    {'name': PERMISSION_REMINDER_DELETE, 'label': _(u'Delete reminder')},
-    {'name': PERMISSION_REMINDER_DELETE_ALL, 'label': _(u'Delete all reminders')},
-])
+set_namespace_title('reminders', _(u'Reminders'))
+register_permission(PERMISSION_REMINDER_VIEW)
+register_permission(PERMISSION_REMINDER_VIEW_ALL)
+register_permission(PERMISSION_REMINDER_CREATE)
+register_permission(PERMISSION_REMINDER_EDIT)
+register_permission(PERMISSION_REMINDER_EDIT_ALL)
+register_permission(PERMISSION_REMINDER_DELETE)
+register_permission(PERMISSION_REMINDER_DELETE_ALL)
 
-reminder_list = {'text': _(u'reminder list'), 'view': 'reminder_list', 'famfam': 'hourglass', 'permissions': {'namespace': 'reminders', 'permissions': [PERMISSION_REMINDER_VIEW]}}
-reminder_list_all = {'text': _(u'reminder list (all)'), 'view': 'reminder_list_all', 'famfam': 'hourglass', 'permissions': {'namespace': 'reminders', 'permissions': [PERMISSION_REMINDER_VIEW_ALL]}}
-expired_remider_list = {'text': _(u'expired reminder list'), 'view': 'expired_remider_list', 'famfam': 'hourglass', 'permissions': {'namespace': 'reminders', 'permissions': [PERMISSION_REMINDER_VIEW]}}
-expired_remider_list_all = {'text': _(u'expired reminder list (all)'), 'view': 'expired_remider_list_all', 'famfam': 'hourglass', 'permissions': {'namespace': 'reminders', 'permissions': [PERMISSION_REMINDER_VIEW_ALL]}}
-reminder_add = {'text': _(u'create reminder (calendar)'), 'view': 'reminder_add', 'famfam': 'hourglass_add', 'permissions': {'namespace': 'reminders', 'permissions': [PERMISSION_REMINDER_CREATE]}}
-reminder_add_days = {'text': _(u'create reminder (days)'), 'view': 'reminder_add_days', 'famfam': 'hourglass_add', 'permissions': {'namespace': 'reminders', 'permissions': [PERMISSION_REMINDER_CREATE]}}
-reminder_edit = {'text': _(u'edit (calendar)'), 'view': 'reminder_edit', 'args': 'object.pk', 'famfam': 'hourglass_go', 'permissions': {'namespace': 'reminders', 'permissions': [PERMISSION_REMINDER_EDIT]}}
-reminder_edit_days = {'text': _(u'edit (days)'), 'view': 'reminder_edit_days', 'args': 'object.pk', 'famfam': 'hourglass_go', 'permissions': {'namespace': 'reminders', 'permissions': [PERMISSION_REMINDER_EDIT]}}
-future_expired_remider_list = {'text': _(u'future expired reminders'), 'view': 'future_expired_remider_list', 'famfam': 'hourglass', 'permissions': {'namespace': 'reminders', 'permissions': [PERMISSION_REMINDER_VIEW]}}
-future_expired_remider_list_all = {'text': _(u'future expired reminders (all)'), 'view': 'future_expired_remider_list_all', 'famfam': 'hourglass', 'permissions': {'namespace': 'reminders', 'permissions': [PERMISSION_REMINDER_VIEW_ALL]}}
+reminder_list = {'text': _(u'reminder list'), 'view': 'reminder_list', 'famfam': 'hourglass', 'permissions': [PERMISSION_REMINDER_VIEW]}
+reminder_list_all = {'text': _(u'reminder list (all)'), 'view': 'reminder_list_all', 'famfam': 'hourglass', 'permissions': [PERMISSION_REMINDER_VIEW_ALL]}
+expired_remider_list = {'text': _(u'expired reminder list'), 'view': 'expired_remider_list', 'famfam': 'hourglass', 'permissions': [PERMISSION_REMINDER_VIEW]}
+expired_remider_list_all = {'text': _(u'expired reminder list (all)'), 'view': 'expired_remider_list_all', 'famfam': 'hourglass', 'permissions': [PERMISSION_REMINDER_VIEW_ALL]}
+reminder_add = {'text': _(u'create reminder (calendar)'), 'view': 'reminder_add', 'famfam': 'hourglass_add', 'permissions': [PERMISSION_REMINDER_CREATE]}
+reminder_add_days = {'text': _(u'create reminder (days)'), 'view': 'reminder_add_days', 'famfam': 'hourglass_add', 'permissions': [PERMISSION_REMINDER_CREATE]}
+reminder_edit = {'text': _(u'edit (calendar)'), 'view': 'reminder_edit', 'args': 'object.pk', 'famfam': 'hourglass_go', 'permissions': [PERMISSION_REMINDER_EDIT]}
+reminder_edit_days = {'text': _(u'edit (days)'), 'view': 'reminder_edit_days', 'args': 'object.pk', 'famfam': 'hourglass_go', 'permissions': [PERMISSION_REMINDER_EDIT]}
+future_expired_remider_list = {'text': _(u'future expired reminders'), 'view': 'future_expired_remider_list', 'famfam': 'hourglass', 'permissions': [PERMISSION_REMINDER_VIEW]}
+future_expired_remider_list_all = {'text': _(u'future expired reminders (all)'), 'view': 'future_expired_remider_list_all', 'famfam': 'hourglass', 'permissions': [PERMISSION_REMINDER_VIEW_ALL]}
 
-reminder_delete = {'text': _(u'delete'), 'view': 'reminder_delete', 'args': 'object.id', 'famfam': 'hourglass_delete', 'permissions': {'namespace': 'reminders', 'permissions': [PERMISSION_REMINDER_DELETE]}}
-reminder_multiple_delete = {'text': _(u'delete'), 'view': 'reminder_multiple_delete', 'famfam': 'hourglass_delete', 'permissions': {'namespace': 'reminders', 'permissions': [PERMISSION_REMINDER_DELETE]}}
+reminder_delete = {'text': _(u'delete'), 'view': 'reminder_delete', 'args': 'object.id', 'famfam': 'hourglass_delete', 'permissions': [PERMISSION_REMINDER_DELETE]}
+reminder_multiple_delete = {'text': _(u'delete'), 'view': 'reminder_multiple_delete', 'famfam': 'hourglass_delete', 'permissions': [PERMISSION_REMINDER_DELETE]}
 
-reminder_participant_add = {'text': _(u'add participant'), 'view': 'participant_add', 'args': 'object.pk', 'famfam': 'user_add', 'permissions': {'namespace': 'reminders', 'permissions': [PERMISSION_REMINDER_EDIT]}}
-reminder_participant_remove = {'text': _(u'remove'), 'view': 'participant_remove', 'args': 'object.pk', 'famfam': 'user_delete', 'permissions': {'namespace': 'reminders', 'permissions': [PERMISSION_REMINDER_EDIT]}}
+reminder_participant_add = {'text': _(u'add participant'), 'view': 'participant_add', 'args': 'object.pk', 'famfam': 'user_add', 'permissions': [PERMISSION_REMINDER_EDIT]}
+reminder_participant_remove = {'text': _(u'remove'), 'view': 'participant_remove', 'args': 'object.pk', 'famfam': 'user_delete', 'permissions': [PERMISSION_REMINDER_EDIT]}
 
 register_links(
     [
+        'comment_add', 'comment_delete', 'comment_multiple_delete',
         'participant_remove', 'reminder_participant_add',
         'future_expired_remider_list', 'future_expired_remider_list_all',
         'reminder_view', 'reminder_list_all', 'reminder_edit',

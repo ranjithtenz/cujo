@@ -15,7 +15,7 @@ from reminder_comments.forms import CommentForm
 
 
 def comment_delete(request, comment_id=None, comment_id_list=None):
-    #check_permissions(request.user, [PERMISSION_COMMENT_DELETE])
+    check_permissions(request.user, [PERMISSION_COMMENT_DELETE])
     post_action_redirect = None
 
     if comment_id:
@@ -65,7 +65,7 @@ def comment_multiple_delete(request):
 
 
 def comment_add(request, reminder_id):
-    #check_permissions(request.user, [PERMISSION_COMMENT_CREATE])
+    check_permissions(request.user, [PERMISSION_COMMENT_CREATE])
 
     reminder = get_object_or_404(Reminder, pk=reminder_id)
     post_action_redirect = None
