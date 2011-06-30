@@ -28,14 +28,15 @@ register_permission(PERMISSION_REMINDER_DELETE_ALL)
 
 reminder_list = {'text': _(u'reminder list'), 'view': 'reminder_list', 'famfam': 'hourglass', 'permissions': [PERMISSION_REMINDER_VIEW]}
 reminder_list_all = {'text': _(u'reminder list (all)'), 'view': 'reminder_list_all', 'famfam': 'hourglass', 'permissions': [PERMISSION_REMINDER_VIEW_ALL]}
-expired_remider_list = {'text': _(u'expired reminder list'), 'view': 'expired_remider_list', 'famfam': 'hourglass', 'permissions': [PERMISSION_REMINDER_VIEW]}
-expired_remider_list_all = {'text': _(u'expired reminder list (all)'), 'view': 'expired_remider_list_all', 'famfam': 'hourglass', 'permissions': [PERMISSION_REMINDER_VIEW_ALL]}
+expired_remider_list = {'text': _(u'expired reminder list'), 'view': 'expired_remider_list', 'famfam': 'tick', 'permissions': [PERMISSION_REMINDER_VIEW]}
+expired_remider_list_all = {'text': _(u'expired reminder list (all)'), 'view': 'expired_remider_list_all', 'famfam': 'tick', 'permissions': [PERMISSION_REMINDER_VIEW_ALL]}
 reminder_add = {'text': _(u'create reminder (calendar)'), 'view': 'reminder_add', 'famfam': 'hourglass_add', 'permissions': [PERMISSION_REMINDER_CREATE]}
 reminder_add_days = {'text': _(u'create reminder (days)'), 'view': 'reminder_add_days', 'famfam': 'hourglass_add', 'permissions': [PERMISSION_REMINDER_CREATE]}
 reminder_edit = {'text': _(u'edit (calendar)'), 'view': 'reminder_edit', 'args': 'object.pk', 'famfam': 'hourglass_go', 'permissions': [PERMISSION_REMINDER_EDIT]}
 reminder_edit_days = {'text': _(u'edit (days)'), 'view': 'reminder_edit_days', 'args': 'object.pk', 'famfam': 'hourglass_go', 'permissions': [PERMISSION_REMINDER_EDIT]}
-future_expired_remider_list = {'text': _(u'future expired reminders'), 'view': 'future_expired_remider_list', 'famfam': 'hourglass', 'permissions': [PERMISSION_REMINDER_VIEW]}
-future_expired_remider_list_all = {'text': _(u'future expired reminders (all)'), 'view': 'future_expired_remider_list_all', 'famfam': 'hourglass', 'permissions': [PERMISSION_REMINDER_VIEW_ALL]}
+future_expired_remider_list = {'text': _(u'future expired reminders'), 'view': 'future_expired_remider_list', 'famfam': 'calendar', 'permissions': [PERMISSION_REMINDER_VIEW]}
+future_expired_remider_list_all = {'text': _(u'future expired reminders (all)'), 'view': 'future_expired_remider_list_all', 'famfam': 'calendar', 'permissions': [PERMISSION_REMINDER_VIEW_ALL]}
+reminder_view = {'text': _(u'details'), 'view': 'reminder_view', 'args': 'object.pk', 'famfam': 'hourglass', 'permissions': [PERMISSION_REMINDER_VIEW]}
 
 reminder_delete = {'text': _(u'delete'), 'view': 'reminder_delete', 'args': 'object.id', 'famfam': 'hourglass_delete', 'permissions': [PERMISSION_REMINDER_DELETE]}
 reminder_multiple_delete = {'text': _(u'delete'), 'view': 'reminder_multiple_delete', 'famfam': 'hourglass_delete', 'permissions': [PERMISSION_REMINDER_DELETE]}
@@ -60,7 +61,7 @@ register_links(
 )
 register_links([Reminder],
     [
-        reminder_edit, reminder_edit_days, reminder_participant_add,
+        reminder_view, reminder_edit, reminder_edit_days, reminder_participant_add,
         reminder_delete
     ]
 )
