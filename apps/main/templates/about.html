@@ -7,12 +7,20 @@
 
 <div class="content">
     <h3 class="tc">
-    {% project_name %} ({% trans "Version" %} {% app_version "main" %})<br /><br />
-    {% trans "Reminder application" %}<br /><br />
-    <a href="http://www.github.com/rosarior/mayan/">http://www.github.com/rosarior/cujo/</a><br /><br />
-    <br/>{% trans "Released under the GPL V3 License" %}
+        {% project_name %} ({% trans "Version" %} {% app_version "main" %})<br /><br />
+        <div class="tc">
+                <img src="{{ MEDIA_URL }}images/1011023_15459585_small.jpg"/>
+        </div>
+
+        {% trans "Reminder application" %}<br /><br />
+        <a href="http://www.github.com/rosarior/mayan/">http://www.github.com/rosarior/cujo/</a><br /><br />
+        {% trans "Released under the GPL V3 License" %}
     </h3>
-    {#<div class="tc"><img src="{{ MEDIA_URL }}images.png"/></div>#}
+
+    <div class="tc">
+        <img src="{{ MEDIA_URL }}images/gplv3-127x51.png"/>
+        <img src="{{ MEDIA_URL }}images/djangopowered126x54.gif"/>
+    </div>
 </div>
 {% endblock %}
 {% block footer %}
