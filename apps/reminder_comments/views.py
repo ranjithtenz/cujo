@@ -10,7 +10,8 @@ from django.contrib.sites.models import Site
 from permissions.api import check_permissions
 from reminders.models import Reminder
 
-from reminder_comments import PERMISSION_COMMENT_DELETE, PERMISSION_COMMENT_CREATE
+from reminder_comments import PERMISSION_COMMENT_DELETE, \
+    PERMISSION_COMMENT_CREATE, PERMISSION_COMMENT_VIEW
 from reminder_comments.forms import CommentForm
 
 
@@ -92,4 +93,21 @@ def comment_add(request, reminder_id):
         'title': _(u'Add comment to reminder: %s') % reminder,
         'next': next,
         'object': reminder,
+    }, context_instance=RequestContext(request))
+
+
+def comments_for_object(request, reminder_id):
+    """
+    Show a list of all the comments related to the passed object
+    """
+    check_permissions(request.user, [PERMISSION_COMMENT_VIEW])
+
+    reminder = get_object_or_404(Reminder, pk=reminder_id)
+
+    return render_to_response('generic_list.html', {
+        'object': reminder,
+        'title': _(u'comments'),
+        'object_list': Comment.objects.for_model(reminder).order_by('-submit_date'),
+        'hide_link': True,
+        'hide_object': True,
     }, context_instance=RequestContext(request))

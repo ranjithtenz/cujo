@@ -10,10 +10,8 @@ from django.core.exceptions import PermissionDenied
 from django.utils import formats
 #from django.db.models import Q
 from django.contrib.auth.models import User
-from django.contrib.comments.models import Comment
 
 from permissions.api import check_permissions
-from reminder_comments.utils import get_comments_subtemplate
 
 from reminders.forms import ReminderForm, ReminderForm_view, \
     ReminderForm_days, FutureDateForm, ParticipantForm_add
@@ -225,23 +223,12 @@ def reminder_view(request, reminder_id):
                     'form': form,
              }
         },
-        {
-            'name': 'generic_list_subtemplate.html',
-            'context': {
-                'object_list': reminder.participant_set.all(),
-                'title': _(u'participants'),
-                'hide_link': True,
-                'hide_object': True,
-             }
-        },
     ]
-
-    if Comment.objects.for_model(reminder).count():
-        subtemplates_list.append(get_comments_subtemplate(reminder))
 
     return render_to_response('generic_detail.html', {
         'subtemplates_list': subtemplates_list,
         'object': reminder,
+        'object_name': _(u'reminder'),
         'reminder': reminder
     },
     context_instance=RequestContext(request))
@@ -368,3 +355,25 @@ def participant_remove(request, participant_id):
 
     return render_to_response('generic_confirm.html', context,
         context_instance=RequestContext(request))
+
+
+def participant_list(request, reminder_id):
+    try:
+        check_permissions(request.user, [PERMISSION_REMINDER_VIEW_ALL])
+        reminder = get_object_or_404(Reminder, pk=reminder_id)
+    except PermissionDenied:
+        check_permissions(request.user, [PERMISSION_REMINDER_VIEW])
+        try:
+            reminder = get_object_or_404(Reminder.objects.filter(participant__user=request.user).filter(participant__role__in=[PARTICIPANT_ROLE_CREATOR, PARTICIPANT_ROLE_EDITOR, PARTICIPANT_ROLE_WATCHER]).distinct(), pk=reminder_id)
+        except Http404:
+            raise PermissionDenied
+
+    return render_to_response('generic_list.html', {
+        'object_list': reminder.participant_set.all(),
+        'title': _(u'participants'),
+        'object': reminder,
+        'object_name': _(u'reminder'),
+        'hide_link': True,
+        'hide_object': True,
+    },
+    context_instance=RequestContext(request))

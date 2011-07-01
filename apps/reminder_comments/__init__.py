@@ -7,23 +7,24 @@ from permissions.api import register_permission, set_namespace_title
 from django.contrib.comments.models import Comment
 from django.conf import settings
 
-from reminders.models import Reminder
-
 if 'django.contrib.comments' not in settings.INSTALLED_APPS:
     raise Exception('This app depends on the django.contrib.comments app.')
 
 PERMISSION_COMMENT_CREATE = {'namespace': 'comments', 'name': 'comment_create', 'label': _(u'Create new comments')}
 PERMISSION_COMMENT_DELETE = {'namespace': 'comments', 'name': 'comment_delete', 'label': _(u'Delete comments')}
 PERMISSION_COMMENT_EDIT = {'namespace': 'comments', 'name': 'comment_edit', 'label': _(u'Edit comments')}
+PERMISSION_COMMENT_VIEW = {'namespace': 'comments', 'name': 'comment_view', 'label': _(u'View comments')}
 
 set_namespace_title('comments', _(u'Comments'))
 register_permission(PERMISSION_COMMENT_CREATE)
 register_permission(PERMISSION_COMMENT_DELETE)
 register_permission(PERMISSION_COMMENT_EDIT)
+register_permission(PERMISSION_COMMENT_VIEW)
 
 comment_delete = {'text': _('delete'), 'view': 'comment_delete', 'args': 'object.id', 'famfam': 'comment_delete', 'permissions': [PERMISSION_COMMENT_DELETE]}
 comment_multiple_delete = {'text': _('delete'), 'view': 'comment_multiple_delete', 'args': 'object.id', 'famfam': 'comments_delete', 'permissions': [PERMISSION_COMMENT_DELETE]}
 comment_add = {'text': _('add comment'), 'view': 'comment_add', 'args': 'object.id', 'famfam': 'comment_add', 'permissions': [PERMISSION_COMMENT_CREATE]}
+comments_for_object = {'text': _('comments'), 'view': 'comments_for_object', 'args': 'object.id', 'famfam': 'comments', 'permissions': [PERMISSION_COMMENT_VIEW]}
 
 register_model_list_columns(Comment, [
     {
@@ -40,4 +41,5 @@ register_model_list_columns(Comment, [
     }
 ])
 
-register_links(Reminder, [comment_add])
+register_links(['comments_for_object'], [comment_add], menu_name='sidebar')
+register_links(Comment, [comment_delete])

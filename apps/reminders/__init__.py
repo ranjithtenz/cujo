@@ -2,10 +2,12 @@ import datetime
 
 from django.utils.translation import ugettext_lazy as _
 
-from navigation.api import register_links, register_menu, \
+from navigation.api import register_links, register_top_menu, \
     register_model_list_columns, register_multi_item_links
 from permissions.api import register_permission, set_namespace_title
 from common.utils import two_state_template
+
+from reminder_comments import comments_for_object
 
 from reminders.models import Reminder, Participant
 
@@ -43,11 +45,14 @@ reminder_multiple_delete = {'text': _(u'delete'), 'view': 'reminder_multiple_del
 
 reminder_participant_add = {'text': _(u'add participant'), 'view': 'participant_add', 'args': 'object.pk', 'famfam': 'user_add', 'permissions': [PERMISSION_REMINDER_EDIT]}
 reminder_participant_remove = {'text': _(u'remove'), 'view': 'participant_remove', 'args': 'object.pk', 'famfam': 'user_delete', 'permissions': [PERMISSION_REMINDER_EDIT]}
+reminder_participant_list = {'text': _(u'participants'), 'view': 'participant_list', 'args': 'object.pk', 'famfam': 'group', 'permissions': [PERMISSION_REMINDER_VIEW]}
+
+register_links(['participant_list'], [reminder_participant_add], menu_name='sidebar')
 
 register_links(
     [
-        'comment_add', 'comment_delete', 'comment_multiple_delete',
-        'participant_remove', 'reminder_participant_add',
+        'comments_for_object', 'comment_add', 'comment_delete', 'comment_multiple_delete',
+        'participant_remove', 'reminder_participant_add', 'participant_list',
         'future_expired_remider_list', 'future_expired_remider_list_all',
         'reminder_view', 'reminder_list_all', 'reminder_edit',
         'reminder_edit_days', 'reminder_delete', 'reminder_list',
@@ -60,12 +65,16 @@ register_links(
     ], menu_name='sidebar'
 )
 register_links([Reminder],
-    [
-        reminder_view, reminder_edit, reminder_edit_days, reminder_participant_add,
-        reminder_delete
-    ]
+    [reminder_edit, reminder_edit_days, reminder_delete]
 )
+register_links([Reminder], [reminder_view], menu_name='form_header')
+
 register_links([Participant], [reminder_participant_remove])
+
+register_links([Reminder], [reminder_participant_list], menu_name='form_header')
+
+register_links([Reminder], [comments_for_object], menu_name='form_header')
+
 register_multi_item_links(
     [
         'reminder_list', 'reminder_list_all', 'expired_remider_list',
@@ -77,12 +86,9 @@ register_multi_item_links(
     ]
 )
 
-register_menu(
-    [
-        {'text': _(u'reminders'), 'view': 'reminder_list', 'links': [
-           # reminder_list, expired_remider_list, future_expired_remider_list
-        ], 'famfam': 'hourglass', 'position': 1}
-    ]
+register_top_menu('reminders',
+    link={'famfam': 'hourglass', 'text': _(u'reminders'), 'view': 'reminder_list'},
+    children_path_regex=[r'^reminders', r'comments'], position=0
 )
 
 register_model_list_columns(Reminder, [
