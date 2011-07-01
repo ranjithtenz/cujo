@@ -8,9 +8,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-06-20 13:20-0400\n"
-"PO-Revision-Date: 2011-06-20 13:20\n"
-"Last-Translator:   <rosario_r@jp.pr.gov>\n"
+"POT-Creation-Date: 2011-07-01 10:01-0400\n"
+"PO-Revision-Date: 2011-07-01 10:01\n"
+"Last-Translator:   <admin@admin.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -19,75 +19,79 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Translated-Using: django-rosetta 0.6.0\n"
 
-#: __init__.py:11
+#: __init__.py:13
 msgid "Create new comments"
 msgstr "Crear nuevos comentarios"
 
-#: __init__.py:12
+#: __init__.py:14
 msgid "Delete comments"
 msgstr "Eliminar comentarios"
 
-#: __init__.py:13
+#: __init__.py:15
 msgid "Edit comments"
 msgstr "Editar los comentarios"
 
-#: __init__.py:15
+#: __init__.py:16
+msgid "View comments"
+msgstr "Ver los comentarios"
+
+#: __init__.py:18
 msgid "Comments"
 msgstr "Comentarios"
 
-#: __init__.py:20 __init__.py:21
+#: __init__.py:24 __init__.py:25
 msgid "delete"
 msgstr "eliminar"
 
-#: __init__.py:22
+#: __init__.py:26
 msgid "add comment"
 msgstr "añadir comentario"
 
-#: __init__.py:26
-msgid "date"
-msgstr "fecha"
-
-#: __init__.py:30
-msgid "user"
-msgstr "usuario"
-
-#: __init__.py:34 views.py:45
-msgid "comment"
-msgstr "comentario"
-
-#: utils.py:14
+#: __init__.py:27 utils.py:14 views.py:109
 msgid "comments"
 msgstr "comentarios"
 
-#: views.py:26
+#: __init__.py:31
+msgid "date"
+msgstr "fecha"
+
+#: __init__.py:35
+msgid "user"
+msgstr "usuario"
+
+#: __init__.py:39 views.py:46
+msgid "comment"
+msgstr "comentario"
+
+#: views.py:27
 msgid "Must provide at least one comment."
 msgstr "Debe proveer al menos un comentario."
 
-#: views.py:36
+#: views.py:37
 #, python-format
 msgid "Comment \"%s\" deleted successfully."
 msgstr "Comentario \"%s\" eliminado exitosamente."
 
-#: views.py:38
+#: views.py:39
 #, python-format
 msgid "Error deleting comment \"%(comment)s\": %(error)s"
 msgstr "Error al eliminar el comentario \" %(comment)s\": %(error)s "
 
-#: views.py:53
+#: views.py:54
 #, python-format
 msgid "Are you sure you wish to delete the comment: %s?"
 msgstr "¿Está seguro que desea eliminar el comentario:% s?"
 
-#: views.py:55
+#: views.py:56
 #, python-format
 msgid "Are you sure you wish to delete the comments: %s?"
 msgstr "¿Está seguro que desea eliminar los comentarios:% s?"
 
-#: views.py:85
+#: views.py:86
 msgid "Comment added successfully."
 msgstr "Comentario añadido exitosamente."
 
-#: views.py:92
+#: views.py:93
 #, python-format
-msgid "Add comment to document: %s"
-msgstr "Añadir comentario al documento: %s"
+msgid "Add comment to reminder: %s"
+msgstr "Añadir comentario al recordatorio: %s"
