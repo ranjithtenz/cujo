@@ -10,6 +10,7 @@ from django.views.generic.create_update import create_object, delete_object, upd
 from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.models import User, Group
+from django.utils.safestring import mark_safe
 
 from common.views import assign_remove
 from common.utils import generate_choices_w_labels
@@ -42,15 +43,15 @@ def _role_permission_link(requester, permission, permission_list):
     template = u'<span class="nowrap"><a href="%(url)s"><span class="famfam active famfam-%(icon)s"></span>%(text)s</a></span>'
 
     if permission in permission_list:
-        return template % {
+        return mark_safe(template % {
             'url': reverse('permission_revoke',
                 args=[permission.pk, ct.app_label, ct.model, requester.pk]),
-            'icon': u'key_delete', 'text': ugettext(u'Revoke')}
+            'icon': u'key_delete', 'text': ugettext(u'Revoke')})
     else:
-        return template % {
+        return mark_safe(template % {
             'url': reverse('permission_grant',
                 args=[permission.pk, ct.app_label, ct.model, requester.pk]),
-            'icon': u'key_add', 'text': ugettext(u'Grant')}
+            'icon': u'key_add', 'text': ugettext(u'Grant')})
 
 
 def role_permissions(request, role_id):
