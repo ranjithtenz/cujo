@@ -20,6 +20,7 @@ def set_namespace_title(namespace, title):
     namespace_titles.setdefault(namespace, title)
 
 
+@transaction.commit_manually
 def register_permission(permission):
     try:
         permission_obj, created = Permission.objects.get_or_create(
